@@ -1,0 +1,15 @@
+export const KEY_NAME_IDENTIFY_CONTACT_ID = 'id';
+export const KEY_NAME_IDENTIFY_CONTACT_CODE = 'code';
+export const KEY_NAME_IDENTIFY_CONTACT_NAME = 'name';
+export const KEY_NAME_IDENTIFY_CONTACT_BUYING_ROLE = 'buyingRole';
+export const KEY_NAME_IDENTIFY_CONTACT_EMAIL = 'emails';
+export const KEY_NAME_IDENTIFY_CONTACT_PHONE = 'phones';
+export const KEY_NAME_IDENTIFY_CONTACT_MOBILE = 'mobiles';
+export const KEY_NAME_IDENTIFY_CONTACT_DEPARTMENT = 'department';
+export const KEY_NAME_IDENTIFY_CONTACT_JOB = 'job';
+export const KEY_NAME_IDENTIFY_CONTACT_CREATED_BY = 'createdBy';
+export const KEY_NAME_IDENTIFY_CONTACT_CREATED_AT = 'createdAt';
+export const KEY_NAME_IDENTIFY_CONTACT_UPDATED_BY = 'updatedBy';
+export const KEY_NAME_IDENTIFY_CONTACT_UPDATED_AT = 'updatedAt';
+export const KEY_NAME_IDENTIFY_CONTACT_DELETED_BY = 'deletedBy';
+export const KEY_NAME_IDENTIFY_CONTACT_DELETED_AT = 'deletedAt';

@@ -1,0 +1,480 @@
+@import './variables';
+@import './stylemanger';
+@import './blockstyle';
+//@import './src/img/flex-dir-row.png';
+
+/* We can remove the border we've set at the beginnig */
+// #gjs {
+//   border: 0;
+// }
+
+.#{$prefix} {
+  @each $cnum, $ccol in (one, $primaryColor), (two, $secondaryColor), (three, $tertiaryColor), (four, $quaternaryColor) {
+    &#{$cnum} {
+      &-bg {
+        background-color: $ccol;
+      }
+
+      &-color {
+        color: $ccol;
+
+        &-h:hover {
+          color: $ccol;
+        }
+      }
+    }
+  }
+}
+
+/* We can remove the border we've set at the beginnig */
+.gjs-sm-label {
+  align-items: start;
+}
+
+.gjs-layer-caret {
+  top: -1px;
+}
+
+.gjs-layer-name {
+  padding: 0 8px 10px 5px;
+}
+
+.gjs-layer-count {
+  top: 4px;
+}
+
+.gjs-layer-move {
+  padding-top: 5px;
+}
+
+.gjs-cv-canvas__frames {
+  width: 99.5%;
+  height: 99.3%;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.gjs-clm-tags #gjs-clm-tag-label {
+  color: white;
+}
+
+.gjs-clm-tags #gjs-clm-new {
+  color: white;
+}
+
+.gjs-pn-btn-label-toolbox,
+.gjs-pn-btn-label-prop,
+.gjs-pn-btn-label-layer,
+.gjs-pn-btn-label-style {
+  font-size: 14px;
+}
+
+@media screen and (max-width: 1650px) {
+  .gjs-pn-btn-label-toolbox,
+  .gjs-pn-btn-label-prop,
+  .gjs-pn-btn-label-layer,
+  .gjs-pn-btn-label-style {
+    font-size: 0;
+  }
+  .gjs-pn-btn-label-toolbox::before {
+    content: '\f009';
+    font-family: 'FontAwesome';
+    font-size: 16px !important;
+    top: 4px;
+    position: relative;
+  }
+  .gjs-pn-btn-label-style::before {
+    content: '\f1fc';
+    font-family: 'FontAwesome';
+    font-size: 16px !important;
+    top: 4px;
+    position: relative;
+  }
+  .gjs-pn-btn-label-prop::before {
+    content: '\f013';
+    font-family: 'FontAwesome';
+    font-size: 16px !important;
+    top: 4px;
+    position: relative;
+  }
+  .gjs-pn-btn-label-layer::before {
+    content: '\f0c9';
+    font-family: 'FontAwesome';
+    font-size: 16px !important;
+    top: 4px;
+    position: relative;
+  }
+}
+
+.gjs-block {
+  width: 27%;
+  padding: 0.5em;
+  margin: 6px 3.1% 6px;
+}
+
+.gjs-block.fa {
+  padding: 6px;
+}
+
+// .gjs-block {
+//   .mar-svg {
+//     fill: none;
+//   }
+// }
+
+.gjs-block__media {
+  margin-bottom: 0px;
+}
+
+.gjs-field {
+  background-color: $secondaryColor;
+  color: $primaryColor;
+}
+
+.gjs-field-checkbox {
+  margin: 0;
+}
+
+.gjs-sm-layer {
+  padding: 3px;
+}
+
+.gjs-sm-layer #gjs-sm-move {
+  height: 23px;
+}
+
+.gjs-sm-layer #gjs-sm-close-layer {
+  height: 23px;
+}
+
+.gjs-sm-layer-preview {
+  height: 20px;
+  width: 17px;
+}
+
+.icons-flex {
+  height: 24px;
+  //width: 24px;
+  margin-bottom: 0px;
+}
+.icon-dir-row {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-dir-row.png') no-repeat center;
+  //margin-left: 15px;
+}
+.icon-dir-row-rev {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-dir-row-rev.png') no-repeat center;
+  //margin-left: 15px;
+}
+.icon-dir-col {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-dir-col.png') no-repeat center;
+  //margin-left: 18px;
+}
+.icon-dir-col-rev {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-dir-col-rev.png') no-repeat center;
+  //margin-left: 18px;
+}
+.icon-just-start {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-just-start.png') no-repeat center;
+  //margin-left: 10px;
+}
+.icon-just-end {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-just-end.png') no-repeat center;
+  //margin-left: 10px;
+}
+.icon-just-sp-bet {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-just-sp-bet.png') no-repeat center;
+  //margin-left: 10px;
+}
+.icon-just-sp-ar {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-just-sp-ar.png') no-repeat center;
+  //margin-left: 10px;
+}
+.icon-just-sp-cent {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-just-sp-cent.png') no-repeat center;
+  //margin-left: 10px;
+}
+.icon-al-start {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-al-start.png') no-repeat center;
+  //margin-left: 15px;
+}
+.icon-al-end {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-al-end.png') no-repeat center;
+  //margin-left: 15px;
+}
+.icon-al-str {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-al-str.png') no-repeat center;
+  //margin-left: 15px;
+}
+.icon-al-center {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-al-center.png') no-repeat center;
+  //margin-left: 18px;
+}
+.icon-al-se-start {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-al-start.png') no-repeat center;
+  //margin-left: 10px;
+}
+.icon-al-se-end {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-al-end.png') no-repeat center;
+  //margin-left: 10px;
+}
+.icon-al-se-str {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-al-str.png') no-repeat center;
+  //margin-left: 10px;
+}
+.icon-al-se-center {
+  background: url('/src/base/components/@hanbiro/GrapeTS/assets/img/flex-al-center.png') no-repeat center;
+  //margin-left: 10px;
+}
+
+.gjs-radio-item {
+  border: none;
+  background: $tertiaryColor;
+
+  &:first-child {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  input:checked + .gjs-radio-item-label {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .gjs-radio-item-label {
+    margin-bottom: 0;
+    color: white;
+    padding: 2px;
+  }
+
+  .fa {
+    padding: 5px !important;
+  }
+}
+
+.gjs-sm-stack #gjs-sm-add {
+  top: -21px;
+  color: $quaternaryColor;
+}
+
+.gjs-field-colorp {
+  padding: 0;
+}
+
+// .gjs-btn {
+//   display: inline-block;
+//   font-weight: 400;
+//   color: $primaryColor; //#fff;
+//   text-align: center;
+//   vertical-align: middle;
+//   user-select: none;
+//   background-color: transparent;
+//   border: 1px solid transparent;
+//   padding: 0.2rem 0.6rem;
+//   font-size: 1rem;
+//   line-height: 1.5;
+//   border-radius: 0.25rem;
+//   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+//     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+// }
+// .gjs-btn-primary {
+//   margin-top: 5px;
+//   color: $primaryColor; //#fff;
+//   background-color: $quaternaryColor; // #007bff;
+//   border-color: $quaternaryColor; //#007bff;
+// }
+
+.gjs-btn-prim {
+  //background-color: rgba(0, 0, 0, 0.1);
+  //margin-top: 5px;
+  background-color: #007bff;
+  color: white;
+  margin-top: 0px; //5
+  margin-right: 5px;
+  float: right;
+  padding: 5px 5px; //5 15
+  border-radius: 3px;
+}
+
+.gjs-btn-import {
+  margin-top: 5px;
+}
+
+.gjs-btn-confirm-yes {
+  background-color: #007bff;
+  color: white;
+  margin-top: 5px;
+  margin-right: 5px;
+  float: right;
+  padding: 5px 15px;
+  border-radius: 3px;
+}
+
+.gjs-btn-confirm-no {
+  background-color: #6c757d;
+  color: white;
+  margin-top: 5px;
+  margin-right: 5px;
+  float: right;
+  padding: 5px 15px;
+  border-radius: 3px;
+}
+
+.gts-modal-container {
+  > .gjs-mdl-dialog {
+    max-width: 950px;
+  }
+}
+
+.gjs-import-label,
+.gjs-export-label {
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.gjs-confirm-label {
+  margin: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.gjs-modal-sm .gjs-mdl-dialog {
+  max-width: 400px;
+}
+
+.CodeMirror {
+  // border-radius: 3px;
+  height: 450px;
+  font-family: sans-serif, monospace;
+  letter-spacing: 0.3px;
+  font-size: 12px;
+}
+.code-mirror-container {
+  width: 50%;
+  padding: 0px 5px;
+}
+.code-mirror-header {
+  background-color: #3c3c3c;
+  padding: 5px 10px 5px;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.code-mirror-collapse-btn {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+}
+.code-mirror-collapse-btn:hover {
+  background: #d9d9d9;
+}
+.tui-image-editor-container .tui-image-editor-help-menu > .tui-image-editor-item {
+  padding: 0px 8px !important;
+}
+.tui-image-editor-container .tui-image-editor-icpartition {
+  width: 0 !important;
+}
+.tui-image-editor-container .tui-image-editor-menu > .tui-image-editor-item {
+  padding: 5px 8px !important;
+}
+
+.tui-image-editor-button.apply {
+  .svg_ic-menu {
+    margin-bottom: 15px;
+  }
+}
+
+.tui-image-editor-button.cancel {
+  .svg_ic-menu {
+    margin-bottom: 15px;
+  }
+}
+
+.gjs-cta-highlight {
+  background-color: rgb(245 27 128 / 10%);
+}
+
+/* Theming */
+:root {
+  --grapes-primaryColor: #ffffff;
+  --grapes-secondaryColor: #4e4e4e;
+  --grapes-tertiaryColor: #40a9ff;
+  --grapes-quaternaryColor: #d9d9d9;
+  --grapes-fifthnaryColor: #d9d9d9;
+}
+/* Primary color for the background */
+.gjs-one-bg {
+  background-color: var(--grapes-primaryColor);
+}
+
+/* Secondary color for the text color */
+.gjs-two-color {
+  color: var(--grapes-secondaryColor);
+}
+
+/* Tertiary color for the background */
+.gjs-three-bg {
+  background-color: var(--grapes-tertiaryColor);
+  color: white;
+}
+
+/* Quaternary color for the text color */
+.gjs-four-color {
+  color: var(--grapes-tertiaryColor);
+}
+.gjs-four-color-h:hover {
+  color: var(--grapes-quaternaryColor);
+}
+.gjs-pn-btn.gjs-pn-active {
+  background-color: var(--grapes-fifthnaryColor);
+  color: var(--grapes-quaternaryColor);
+}
+// .gjs-title {
+//   background-color: var(--grapes-fifthnaryColor) !important;
+// }
+.style-manager {
+  position: absolute;
+  left: 9%;
+  top: 0;
+  z-index: 15;
+  color: var(--grapes-secondaryColor) !important;
+  background: var(--grapes-primaryColor);
+  // box-shadow: 0 0 1px 1px #bdbdbd;`
+  // max-width: 702px;
+  // border-radius: 3px;
+  padding: 0 5px;
+  // border-left: 1px solid #bdbdbd;
+}
+// .gjs-pn-panel.gjs-pn-devices-c {
+//   top: 0;
+//   left: 0;
+//   border-radius: 4px;
+//   box-shadow: 0 0 5px #c0c6cc;
+// }
+// .gjs-pn-devices-c > .gjs-pn-buttons {
+//   // border-right: 1px solid #c0c6cc;
+// }
+
+.gjs-pn-devices-c > .gjs-pn-buttons:after {
+  content: '';
+  height: 20px; //You can change this if you want smaller/bigger borders
+  width: 1px;
+  position: absolute;
+  right: 0;
+  top: 50%; // If you want to set a smaller height and center it, change this value
+  transform: translateY(-50%);
+  color: white;
+  // background-color: var(--grapes-primaryColor); // The color of your border
+}

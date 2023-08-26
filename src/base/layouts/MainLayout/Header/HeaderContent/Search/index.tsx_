@@ -1,0 +1,92 @@
+import { Box, ClickAwayListener, IconButton, Paper, InputBase, Stack, Chip } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
+import { SearchOutlined } from '@mui/icons-material';
+import { useRef, useState } from 'react';
+
+const Search = () => {
+  const theme = useTheme();
+  const anchorRef = useRef<any>(null);
+  const [open, setOpen] = useState(false);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event: MouseEvent | TouchEvent) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+
+  return (
+    <Box sx={{ flexShrink: 0 }}>
+      <IconButton
+        sx={{
+          borderRadius: '50%',
+          color: 'common.white',
+          '&:hover': {
+            bgcolor: theme.palette.mode === 'dark' ? alpha(theme.palette.primary.dark, 0.15) : alpha(theme.palette.primary.light, 0.15)
+          }
+        }}
+        onClick={handleToggle}
+      >
+        <SearchOutlined fontSize="small" />
+      </IconButton>
+      {open && (
+        <Box
+          ref={anchorRef}
+          sx={{
+            position: 'fixed',
+            top: 110,
+            right: 0,
+            left: 0,
+            zIndex: 9999,
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <ClickAwayListener onClickAway={handleClose}>
+            <Paper sx={{ width: 400, boxShadow: theme.customShadows.z1 }}>
+              <Box
+                sx={{
+                  p: 0.5,
+                  display: 'flex',
+                  alignItems: 'center',
+                  // border: '1px solid',
+                  // borderColor: theme.palette.divider,
+                  borderRadius: '8px 8px 0 0',
+                  // borderBottom: 'none',
+                  bgcolor: theme.palette.mode == 'dark' ? theme.palette.header : 'white'
+                }}
+              >
+                <IconButton type="button" sx={{ p: 1 }} aria-label="search">
+                  <SearchOutlined />
+                </IconButton>
+                <InputBase sx={{ ml: 1, flex: 1, lineHeight: 2.4 }} placeholder="Search" inputProps={{ 'aria-label': 'search input' }} />
+                {/* <IconButton type="button" sx={{ color: 'grey.0', p: 1 }} aria-label="search filter">
+          <Tune />
+        </IconButton> */}
+              </Box>
+              <Stack
+                direction="row"
+                alignItems="center"
+                sx={{
+                  p: 2,
+                  // border: '1px solid',
+                  // borderColor: theme.palette.divider,
+                  borderRadius: '0 0 8px 8px',
+                  // borderTop: 'none',
+                  bgcolor: theme.palette.mode == 'dark' ? theme.palette.header : 'white'
+                }}
+              >
+                <Chip variant="combined" size="small" color="secondary" label="test" onDelete={() => {}} />
+              </Stack>
+            </Paper>
+          </ClickAwayListener>
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+export default Search;

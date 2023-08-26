@@ -1,0 +1,10 @@
+export const REPORT_ID = 'id';
+export const REPORT_NAME = 'name';
+export const REPORT_RECIPIENT = 'recipients';
+export const REPORT_SUBJECT = 'subject';
+export const REPORT_CONTENT = 'content';
+export const REPORT_ASSIGNMENT_GROUP = 'assignmentGroup';
+export const REPORT_DATE_RANGE = 'dateRange';
+export const REPORT_REPORTING_CYCLE = 'reportingCycle';
+export const REPORT_REPORTING_CONTENT = 'reportingContent';
+export const REPORT_ACTIVE = 'active';

@@ -1,0 +1,21 @@
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import { Tune } from '@mui/icons-material';
+import { Chip, Stack, useTheme } from '@mui/material';
+
+export default function Search() {
+  const theme = useTheme();
+  return (
+    <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, bgcolor: '#383838' }}>
+      <IconButton type="button" sx={{ color: 'grey.400', p: 1 }} aria-label="search">
+        <SearchIcon />
+      </IconButton>
+      <InputBase sx={{ ml: 1, flex: 1, color: 'grey.300' }} placeholder="Search" inputProps={{ 'aria-label': 'search input' }} />
+      {/* <IconButton type="button" sx={{ color: 'grey.400', p: 1 }} aria-label="search filter">
+        <Tune />
+      </IconButton> */}
+    </Paper>
+  );
+}

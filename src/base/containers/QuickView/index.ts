@@ -1,0 +1,11 @@
+export { default as CustomerQuickView } from './Customer';
+export { default as ProductQuickView } from './Product/Product';
+export { default as ProductGroupQuickView } from './Product/Group';
+export { default as ProductItemQuickView } from './Product/Item';
+export { default as TicketQuickView } from './Ticket';
+export { default as KnowledgeQuickView } from './Knowledge';
+export { default as ActivityQuickView } from './Activity';
+export { default as UserQuickView } from './User';
+export { default as GroupQuickView } from './Group';
+export { default as CompetitorQuickView } from './Competitor';
+export { default as NoteQuickView } from './Note';

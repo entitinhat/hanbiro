@@ -1,0 +1,36 @@
+import { lazy } from 'react';
+
+export const TextView = lazy(() => import('@base/containers/ViewField/Text'));
+export const TextAreaView = lazy(() => import('@base/containers/ViewField/TextArea'));
+export const DurationView = lazy(() => import('@base/containers/ViewField/Duration'));
+export const RealDurationView = lazy(() => import('@base/containers/ViewField/RealDuration'));
+
+export const PriorityView = lazy(() => import('@base/containers/ViewField/Priority'));
+export const EditorView = lazy(() => import('@base/containers/ViewField/Editor'));
+export const LookUpView = lazy(() => import('@base/containers/ViewField/LookUp'));
+export const DataSourceView = lazy(() => import('@base/containers/ViewField/DataSource'));
+export const TagsView = lazy(() => import('@base/containers/ViewField/Tags'));
+export const ReminderView = lazy(() => import('@base/containers/ViewField/Reminder'));
+export const RepeatTimeView = lazy(() => import('@base/containers/ViewField/RepeatTime'));
+export const DateTimeView = lazy(() => import('@base/containers/ViewField/DateTime'));
+export const SwitchView = lazy(() => import('@base/containers/ViewField/Switch'));
+export const CountryView = lazy(() => import('@base/containers/ViewField/Country'));
+export const EmailInputView = lazy(() => import('@base/containers/ViewField/EmailInput'));
+export const WebsiteInputView = lazy(() => import('@base/containers/ViewField/WebsiteInput'));
+export const PhoneInputView = lazy(() => import('@base/containers/ViewField/PhoneInput'));
+export const MobileInputView = lazy(() => import('@base/containers/ViewField/MobileInput'));
+export const FaxInputView = lazy(() => import('@base/containers/ViewField/FaxInput'));
+export const AddressInputView = lazy(() => import('@base/containers/ViewField/AddressInput'));
+export const NumberFieldView = lazy(() => import('@base/containers/ViewField/NumberField'));
+export const NumberFieldCurrencyView = lazy(() => import('@base/containers/ViewField/NumberFieldCurrencyView'));
+export const AnniversaryInputView = lazy(() => import('@base/containers/ViewField/AnniversaryInput'));
+export const SelectBoxView = lazy(() => import('@base/containers/ViewField/SelectBox'));
+export const UserView = lazy(() => import('@base/containers/ViewField/User'));
+export const UserInputView = lazy(() => import('@base/containers/ViewField/UserInput'));
+export const NumericView = lazy(() => import('@base/containers/ViewField/Numeric'));
+export const WarrantyPeriodView = lazy(() => import('@base/containers/ViewField/WarrantyPeriod'));
+export const WeightView = lazy(() => import('@base/containers/ViewField/Weight'));
+export const DimensionView = lazy(() => import('@base/containers/ViewField/Dimension'));
+export const AddressToInputView = lazy(() => import('@base/containers/ViewField/AddressToInput'));
+export const RadioGroupView = lazy(() => import('@base/containers/ViewField/RadioGroup'));
+export const CheckboxView = lazy(() => import('@base/containers/ViewField/Checkbox'));

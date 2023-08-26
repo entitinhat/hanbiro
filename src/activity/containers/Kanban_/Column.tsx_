@@ -1,0 +1,114 @@
+import React, { memo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { activityListQueryAtom } from '@activity/store/atoms';
+import { pageDataByMenuAtom } from '@base/store/atoms';
+import { FilterInput } from '@base/types/common';
+import { getQuery } from '@activity/pages/ListPage/Helper';
+import useInfinitePosts from '@base/hooks/useInfinitePosts';
+import { Activity } from '@activity/types/activity';
+import { queryKeys } from '@activity/config/queryKeys';
+import { ICard, ICategory, IStatus } from '@base/components/@hanbiro/Kanban/Interface';
+import { cardsSelector } from '@activity/store/selectors/kanban';
+import BaseKanbanColumn, { ColumnProps as BaseColumnProps } from '@base/components/@hanbiro/Kanban/Column';
+import KanbanCard from '@base/components/@hanbiro/Kanban/Card';
+import { useTheme } from '@mui/material/styles';
+import CardContent from './CardContent';
+import { DatasPromise } from '@base/utils/axios/graphql';
+import { InfiniteData } from '@tanstack/react-query';
+import { getListQuery } from '@activity/services/graphql';
+
+interface ColumnProps extends BaseColumnProps {
+  id: string;
+  title: string;
+}
+
+const KanbanColumn = ({ id, title, index }: ColumnProps) => {
+  const { category } = useParams();
+  const theme = useTheme();
+
+  const [cards, setCards] = useRecoilState(cardsSelector);
+  const listFullQuery = useRecoilValue(activityListQueryAtom);
+  const pageData = useRecoilValue(pageDataByMenuAtom(category as string));
+  const { filter } = pageData;
+  const sectionFilter = {
+    ...filter,
+    headerFilters: {
+      ...filter?.headerFilters,
+      section: id
+    }
+  };
+  const filtersQuery: FilterInput = {
+    keyword: sectionFilter?.keyword ?? '',
+    sort: sectionFilter?.sort,
+    paging: sectionFilter?.paging,
+    query: getQuery(sectionFilter)
+  };
+
+  const { data, fetchNextPage, hasNextPage } = useInfinitePosts<Activity[]>(
+    [queryKeys.listActivity, id],
+    getListQuery(listFullQuery),
+    {
+      filter: filtersQuery
+    },
+    {
+      enabled: !!category
+    }
+  );
+
+  const totalItems = data?.pages?.[data.pages.length - 1].paging?.totalItems;
+
+  const makeCards = (data: InfiniteData<DatasPromise<Activity[]>> | undefined) => {
+    let cards: ICard[] = [];
+    data?.pages?.forEach((page: DatasPromise<Activity[]>) => {
+      page.data?.forEach((item: Activity) =>
+        cards.push({
+          id: item.id,
+          category: ICategory.DEPLOY,
+          title: item.subject,
+          status: IStatus.BACKLOG,
+          description: '',
+          hidden: false,
+          data: item
+        })
+      );
+    });
+    return cards;
+  };
+
+  useEffect(() => {
+    let newCards: ICard[] = makeCards(data);
+    if (JSON.stringify(cards?.[id]) !== JSON.stringify(newCards)) {
+      setCards({
+        [id]: [...(cards?.[id] ?? []), ...newCards]
+      });
+    }
+  }, [data]);
+
+  const onScroll = () => {
+    fetchNextPage();
+  };
+
+  return (
+    <BaseKanbanColumn
+      key={id}
+      index={index}
+      id={id}
+      title={`${title}(${totalItems})`}
+      cards={cards?.[id] ?? []}
+      onScroll={hasNextPage ? onScroll : undefined}
+      customCard={(props) => {
+        return (
+          <KanbanCard
+            {...props}
+            isDragDisabled={true}
+            customCardContent={(props) => <CardContent {...props} theme={theme} category={category ?? ''} />}
+            onClick={() => console.log('On card click')}
+          />
+        );
+      }}
+    />
+  );
+};
+
+export default memo(KanbanColumn);

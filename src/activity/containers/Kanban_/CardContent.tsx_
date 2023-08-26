@@ -1,0 +1,102 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link as RouteLink } from 'react-router-dom';
+
+import {
+    ACTIVITY_MENU_KEYS, ACTIVITY_TYPE_CALL, ACTIVITY_TYPE_MAIL, ACTIVITY_TYPE_PROCESS,
+    ACTIVITY_TYPE_SMS, ACTIVITY_TYPE_TASK
+} from '@activity/config/constants';
+import { Badge } from '@base/components/@hanbiro/Kanban/Badge';
+import { CardBottom, CardContentProps, DragIndicator } from '@base/components/@hanbiro/Kanban/Card';
+import { EPriority } from '@base/types/app';
+import { convertDateTimeServerToClient } from '@base/utils/helpers';
+import { CalendarMonth } from '@mui/icons-material';
+import { Box, ChipProps, Typography } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+
+const makePriorityColor = (theme: Theme, value: EPriority): [string, ChipProps['color']] => {
+  switch (value) {
+    case EPriority.URGENT:
+      return [theme.palette.error.main, 'error'];
+    case EPriority.HIGH:
+      return [theme.palette.warning.main, 'warning'];
+    case EPriority.MEDIUM:
+      return [theme.palette.info.main, 'info'];
+    case EPriority.LOW:
+      return [theme.palette.secondary.main, 'secondary'];
+    default:
+      return [theme.palette.success.main, 'success'];
+  }
+}
+
+interface KanbanCardContentProps extends CardContentProps {
+  theme: Theme;
+  category: string;
+}
+
+const KanbanCardContent = ({card, theme, category}: KanbanCardContentProps) => {
+  const { t } = useTranslation();
+
+  const {id, title, data = {}} = card;
+  const {priority} = data;
+
+  const [indicatorColor, badgeColor] = makePriorityColor(theme, priority.keyName);
+
+  let url = '';
+  if (data.type == ACTIVITY_TYPE_PROCESS) {
+    if (data.source?.menu == 'MENU_DESK') {
+      url = `/desk/ticket/${data.source.id}`;
+    }
+  } else {
+    const type = ACTIVITY_MENU_KEYS[data.type];
+    url = `/activity/${category}/${type}_${id}`;
+  }
+
+  let activityDate: string | null = null;
+  if (data.type === ACTIVITY_TYPE_CALL || data.type === ACTIVITY_TYPE_MAIL || data.type === ACTIVITY_TYPE_SMS) {
+    if (data?.startTime) {
+      activityDate = convertDateTimeServerToClient({ date: data.startTime.toString(), humanize: true });
+    }
+  } else if (data.type == ACTIVITY_TYPE_TASK) {
+    if (data?.endTime) {
+      activityDate = convertDateTimeServerToClient({ date: data.endTime.toString(), humanize: true });
+    }
+  }
+
+  return (
+    <>
+      <DragIndicator color={indicatorColor}/>
+      <RouteLink to={url} style={{textDecoration: 'none'}}>
+        <Typography
+          color="primary"
+          component="h6"
+          sx={{
+            textOverflow: 'ellipsis',
+            width: '100%',
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitLineClamp: 2
+          }}
+        >
+          {title}
+        </Typography>
+      </RouteLink>
+      <CardBottom>
+        <Badge label={t(priority.languageKey)} color={badgeColor}/>
+        {
+          !!activityDate && <Box display="flex" alignItems="center">
+            <CalendarMonth fontSize="small" sx={{
+              mr: '5px',
+              width: '16px'
+            }}/>
+            <Typography variant="subtitle2" color="secondary">
+              {activityDate}
+            </Typography>
+          </Box>
+        }
+      </CardBottom>
+    </>
+  );
+}
+
+export default KanbanCardContent;

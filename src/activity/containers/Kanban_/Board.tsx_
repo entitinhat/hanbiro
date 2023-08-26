@@ -1,0 +1,44 @@
+import React from "react";
+import {DragDropContext, DropResult} from 'react-beautiful-dnd';
+import KanbanColumn, {ColumnProps} from "@base/components/@hanbiro/Kanban/Column";
+import {ICard, IColumn} from "@base/components/@hanbiro/Kanban/Interface";
+import {
+  KanbanBoardProps as BaseKanbanBoardProps,
+  BoardContainer
+} from "@base/components/@hanbiro/Kanban/Board";
+
+interface KanbanBoardProps extends BaseKanbanBoardProps {
+  columns: IColumn[];
+  cards: {
+    [columnId: string]: ICard[]
+  };
+  onDragEnd?: (v: DropResult) => void;
+  children?: React.FunctionComponent<ColumnProps>;
+}
+
+const KanbanBoard = (props: KanbanBoardProps) => {
+  const {columns, cards, onDragEnd, children} = props;
+
+  const handleOnDragEnd = (result: DropResult) => {
+    onDragEnd && onDragEnd(result);
+  };
+
+  return (
+    <BoardContainer>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        {columns?.map((column: IColumn, index: number) => {
+          const id: string = column?.id;
+          return children ? children({...column, index, cards: cards?.[id] ?? []}) : <KanbanColumn
+            key={column.id}
+            index={index}
+            id={column.id}
+            title={column.title}
+            cards={cards?.[column.id] ?? []}
+          />;
+        })}
+      </DragDropContext>
+    </BoardContainer>
+  );
+};
+
+export default KanbanBoard;

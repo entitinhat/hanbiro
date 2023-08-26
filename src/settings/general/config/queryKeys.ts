@@ -1,0 +1,23 @@
+export const queryKeys = {
+  settingSelectionFieldsGet: 'setting_selectionFields',
+  settingSelectionFieldItemsGet: 'setting_selectionFieldItems',
+  settingMenuSettingGet: 'setting_menuSetting',
+  settingMenuSettingsGet: 'setting_menusSettings',
+  settingMenuSettingUpdate: 'setting_updateMenuSetting',
+  settingSelectionFieldUpdate: 'setting_updateSelection',
+  settingSelectionFieldCreate: 'setting_createSelection',
+  settingSelectionFieldDelete: 'setting_deleteSelection',
+  settingSelectionFieldMove: 'setting_moveSelections',
+  settingAvailableCountry: 'setting_availableCountries',
+  settingAvailableCurrency: 'setting_availableCurrencies',
+  settingAvailableTimezone: 'setting_availableTimezones',
+  settingFormatSettings: 'setting_formatSettings',
+  settingFormatSettingUpdate: 'setting_updateFormatSetting',
+  settingMergeFieldCreate: 'setting_createMergeField',
+  settingMergeFieldDelete: 'setting_deleteMergeField',
+  settingMergeFieldSort: 'setting_sortMergeFields',
+  settingMergeFieldGet: 'setting_mergeFields',
+  susCustomDomainCreate: 'builtin_createSus',
+  susCustomDomainsGet: 'builtin_susLogs',
+  susCustomDomainsDelete: 'builtin_deleteSus'
+};

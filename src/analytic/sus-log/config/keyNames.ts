@@ -1,0 +1,16 @@
+export const SUS_LOG_ID = 'id';
+export const SUS_LOG_SURL = 'sUrl';
+export const SUS_LOG_URL = 'url';
+export const SUS_LOG_CTA = 'cta';
+export const SUS_LOG_CAMPAIGN = 'campaign';
+export const SUS_LOG_SOURCE = 'source';
+export const SUS_LOG_MEDIUM = 'medium';
+export const SUS_LOG_TERM = 'term';
+export const SUS_LOG_CONTENT = 'content';
+export const SUS_LOG_CUSTOMER = 'customer';
+export const SUS_LOG_ACTIVITY = 'activity';
+export const SUS_LOG_PROCESS = 'process';
+export const SUS_LOG_DOCUMENT = 'document';
+export const SUS_LOG_EMAIL = 'email';
+export const SUS_LOG_MOBILE = 'mobile';
+export const SUS_LOG_TOTAL_CLICK = 'totalClick';

@@ -1,0 +1,112 @@
+import React, {useRef, useState} from 'react';
+import {LabelValueIcon} from '@base/types/app';
+import {
+  Box, Button,
+  ClickAwayListener,
+  Grow,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Popper,
+  Typography,
+  useMediaQuery
+} from "@mui/material";
+import {useTheme} from "@mui/material/styles";
+import {
+  KeyboardArrowDown,
+  MoreHoriz
+} from "@mui/icons-material";
+
+export interface MoreMenuProps {
+  items: LabelValueIcon[];
+  onChange: (v: string) => void;
+}
+
+const MoreMenu = (props: MoreMenuProps) => {
+  const {
+    items = [],
+    onChange
+  } = props;
+
+  const theme = useTheme();
+  const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
+  const anchorRef = useRef<any>(null);
+  const [open, setOpen] = useState(false);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event: MouseEvent | TouchEvent) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleListItemClick = (v: string) => {
+    setOpen(false);
+    onChange && onChange(v);
+  };
+
+  return (
+    <Box sx={{ flexShrink: 0, ml: 0.75}}>
+      <Button sx={{width: 30}} color="secondary" ref={anchorRef} onClick={handleToggle} endIcon={<KeyboardArrowDown fontSize="small"/>}>
+        <MoreHoriz />
+      </Button>
+      <Popper
+        placement={matchesXs ? 'bottom' : 'bottom-end'}
+        open={open}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+        popperOptions={{
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [matchesXs ? -5 : 0, 9]
+              }
+            }
+          ]
+        }}
+        sx={{ zIndex: 10000, marginTop: '-5px !important' }}
+      >
+        {({ TransitionProps }) => (
+          <Grow {...TransitionProps}>
+            <Paper sx={{ boxShadow: theme.customShadows.z1 }}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <List
+                  component="nav"
+                  sx={{
+                    py: 0.5,
+                    width: '100%',
+                    minWidth: 150,
+                    maxWidth: 250,
+                    borderRadius: 0.5,
+                    [theme.breakpoints.down('md')]: {
+                      maxWidth: 250
+                    }
+                  }}
+                >
+                  {items.map((v, i) => {
+                    return (
+                      <ListItemButton sx={{ height: '36px' }} key={i} onClick={() => handleListItemClick(v.value)}>
+                        {!!v?.icon && <ListItemIcon>{v.icon}</ListItemIcon>}
+                        <ListItemText primary={<Typography color="textPrimary">{v?.label}</Typography>} />
+                      </ListItemButton>
+                    )
+                  })}
+                </List>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </Box>
+  );
+};
+
+export default MoreMenu;

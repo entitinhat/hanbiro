@@ -1,0 +1,52 @@
+.dom-active {
+  color: #0168fa;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 3px rgb(0 0 0 / 25%) inset;
+}
+
+.dom-content-wrap {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.dom-content-frame {
+  display: flex;
+  width: 100%;
+  margin: 3px;
+  box-sizing: border-box;
+  border: 1px dashed darkgray;
+  background-color: white;
+  //overflow-y: auto;
+}
+
+.dom-desktop-view {
+  width: 100%;
+  transition: all 0.3s;
+  visibility: visible;
+  transform: scale(1, 1);
+  pointer-events: all;
+}
+
+.dom-tablet-view {
+  width: 45%;
+  transition: all 0.3s;
+  visibility: visible;
+  transform: scale(1, 1);
+  pointer-events: all;
+}
+
+.dom-mobile-view {
+  width: 22%;
+  transition: all 0.3s;
+  visibility: visible;
+  transform: scale(1, 1);
+  pointer-events: all;
+}

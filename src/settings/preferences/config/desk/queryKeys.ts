@@ -1,0 +1,21 @@
+export const queryKeys = {
+  publicTicketClassifications: 'site_ticketClassifications',
+  ticketClassifications: 'desk_ticketClassifications',
+  updateTicketClassifications: 'desk_updateTicketClassification',
+  createTicketClassifications: 'desk_createTicketClassification',
+  channels: 'desk_channels',
+  assignmentGroups: 'desk_assignmentGroups',
+  assignmentUsers: 'desk_assignmentUsers',
+  publicTicketCategories: 'site_ticketCategories',
+  ticketCategories: 'desk_ticketCategories',
+  assignmentReps: 'desk_assignmentGroupReps',
+  tags: 'desk_tags',
+  createDeskTag: 'desk_createTag',
+  createDeskTags: 'desk_createTags',
+  updateDeskTag: 'desk_updateTag',
+  deleteDeskTag: 'desk_deleteTag',
+  settingTicketForm: 'setting_ticketForms',
+  createChannel: 'desk_createChannel',
+  updateChannel: 'desk_updateChannel',
+  deleteChannel: 'desk_deleteChannel'
+};

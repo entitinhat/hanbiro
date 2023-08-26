@@ -1,0 +1,23 @@
+import { atom } from 'recoil';
+import { SnackbarProps } from '@base/types/snackbar';
+
+export const snackBarAtom = atom<SnackbarProps>({
+  key: 'snackBarAtom',
+  default: {
+    action: false,
+    open: false,
+    message: '',
+    anchorOrigin: {
+      vertical: 'top',
+      horizontal: 'center'
+    },
+    variant: 'default',
+    alert: {
+      color: 'primary',
+      variant: 'filled'
+    },
+    transition: 'Fade',
+    close: true,
+    actionButton: false
+  }
+});

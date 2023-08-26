@@ -1,0 +1,11 @@
+import { selector } from 'recoil';
+import { kanbanCardsAtom } from '../atoms/activity';
+
+export const cardsSelector = selector({
+  key: 'cardsSelector',
+  get: ({ get }) => ({ ...get(kanbanCardsAtom) }),
+  set: ({ get, set }, newValue: any) => {
+    const oldValue: any = { ...get(kanbanCardsAtom) };
+    set(kanbanCardsAtom, { ...oldValue, ...newValue });
+  }
+});

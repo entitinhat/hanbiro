@@ -1,0 +1,286 @@
+import _ from 'lodash';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+
+import SideBar from '@base/components/@hanbiro/Sidebar';
+import { sideBarSizeAtom } from '@base/store/atoms/app';
+import { OptionValue } from '@base/types/common';
+import { Box, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { NodeAction, NodeChecklist, NodeCriteria, NodeSimple, NodeSite, NodeStatus, NodeWait } from '@process/components/Diagram/Node';
+import NodeClosed from '@process/components/Diagram/Node/Closed';
+import NodeProcess from '@process/components/Diagram/Node/Process';
+import { useGetDiagram } from '@process/hooks/useDiagram';
+import { useNextSteps } from '@process/hooks/useStep';
+import { nextStepAtom, nodeEdgesAtom, stageAtom } from '@process/store/atoms/diagram';
+import { stepOpenAtom } from '@process/store/atoms/step';
+import { stepWithClose } from '@process/store/selectors';
+import { Edge, Node, NodeEdges } from '@process/types/diagram';
+import { EdgeAction, EdgeChecklist, EdgeCriteria, EdgeSimple, EdgeSite, EdgeWait } from '@process/utils';
+import { checkStep } from '@process/utils/helper';
+
+import { DiagramView, DiagramWrite } from './DiagramSidebar';
+import DiagramStage from './Stage/StageList';
+
+export interface DiagramContainerProps {}
+
+function DiagramContainer(props: DiagramContainerProps) {
+  // console.log('diagram view');
+  const theme = useTheme();
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const { id: processId = '24805c60-bd57-44ac-be1a-7bf5372176cf' } = useParams();
+  const stepOpen = useRecoilValue(stepOpenAtom);
+  const [stages, setStages] = useRecoilState(stageAtom);
+  const setNextSteps = useSetRecoilState(nextStepAtom);
+  const [nodeEdges, setNodeEdges] = useRecoilState(nodeEdgesAtom);
+  const [closedX, setClosedX] = useState(0);
+  const resetStepClose = useResetRecoilState(stepWithClose);
+  const sidebarSize = useRecoilValue(sideBarSizeAtom);
+
+  const onStepClose = useCallback(() => {
+    resetStepClose();
+  }, []);
+
+  const { diagrams } = useGetDiagram({ id: processId });
+  const { nextSteps } = useNextSteps({ id: processId });
+
+  useEffect(() => {
+    let stepOptions: OptionValue[] = [
+      {
+        keyName: '',
+        languageKey: 'None'
+      }
+    ];
+    if (nextSteps && nextSteps.steps) {
+      for (const step of nextSteps.steps) {
+        stepOptions.push({ keyName: step.id, languageKey: step.name });
+      }
+    }
+    setNextSteps(stepOptions);
+  }, [nextSteps]);
+
+  useEffect(() => {
+    if (diagrams && diagrams.nodes?.length > 0) {
+      let edgesIndex: Record<string, Edge[]> = {};
+      if (diagrams.edges?.length > 0) {
+        for (const edge of diagrams.edges) {
+          const e: Edge = {
+            id: edge.id, // status id
+            source: edge.source, // source step id
+            target: edge.target, // target step id (next step)
+            sourceDirection: edge.directionS, // status direction
+            targetDirection: edge.directionT, // direction : backward(bottom), middle(r-middle) -> top, forward(right) -> left
+            label: edge.label, // status name
+            multiple: edge.multiple,
+            primary: edge.primary,
+            multipleOrder: 0,
+            shape: 'SHAPE_FORWARD',
+            height: 0,
+            position: { x: 0, y: 0 },
+            property: edge.property,
+            options: edge.options
+          };
+          if (!edgesIndex[edge.source]) {
+            edgesIndex[edge.source] = [];
+          }
+          edgesIndex[edge.source].push(e);
+        }
+      }
+
+      let closedLeft = 0;
+      let nodes: NodeEdges = { others: {}, closed: {} };
+      for (const node of diagrams.nodes) {
+        let className = (node.shape as string).toLowerCase();
+        if (node.shape == 'SHAPE_BACKWARD' || node.shape == 'SHAPE_MIDDLE') {
+          className += ' not-forward';
+        }
+
+        const n: Node = {
+          id: node.id,
+          type: node.type,
+          data: {
+            label: node.label,
+            tooltip: node.label,
+            method: node.method
+          },
+          shape: node.shape,
+          position: { x: node.positionX, y: node.positionY },
+          property: node.property,
+          edges: edgesIndex[node.id],
+          className: className
+        };
+        if (node.type == 'TYPE_CLOSE') {
+          nodes.closed[n.id] = n;
+        } else {
+          nodes.others[n.id] = n;
+        }
+
+        if (node.positionX > closedLeft) {
+          closedLeft = node.positionX;
+        }
+      }
+
+      if (diagrams.stages) {
+        // 180 : stage width
+        // 44 : arrow width for each step
+        // -44 : minus last stage arrow
+        // -140 : last stage width
+        const stagesWidth = diagrams.stages.map((stage) => stage.width);
+        const sumWidth = _.sum(stagesWidth);
+        // 120 - last step width
+        // 130 - step arrow width
+        // 20 - spare space
+        // 200 - close step width
+        const spareSpace = 120 + 130 + 20 + 200;
+        closedLeft += spareSpace;
+        if (closedLeft < sumWidth) {
+          closedLeft = sumWidth;
+        }
+        let stageX = 0;
+        const newStages = diagrams.stages.map((stage) => {
+          stageX += stage.width;
+          return { ...stage, ...{ axisX: stageX } };
+        });
+        setStages(newStages);
+      }
+      setClosedX(closedLeft);
+      setNodeEdges(nodes);
+    }
+  }, [diagrams]);
+
+  const stepHelper = useMemo(() => {
+    return checkStep(nodeEdges.others);
+  }, [nodeEdges.others]);
+
+  return (
+    <>
+      <Stack spacing={1}>
+        {stages && closedX > 0 && <DiagramStage closedX={closedX} processId={processId!!} />}
+        <Box sx={{ position: 'relative', flexGrow: 1 }}>
+          {Object.entries(nodeEdges.others).map(([key, node]) => {
+            if (node.type == 'TYPE_SIMPLE_ACTION') {
+              const edges = EdgeSimple({
+                node: node,
+                stepHelper: stepHelper
+              });
+              return <NodeSimple key={key} processId={processId!!} node={{ ...node, ...{ edges: edges } }} stepHelper={stepHelper} />;
+            } else if (node.type == 'TYPE_CRITERIA') {
+              const edges = EdgeCriteria({
+                node: node,
+                stepHelper: stepHelper
+              });
+              return <NodeCriteria key={key} processId={processId!!} node={{ ...node, ...{ edges: edges } }} stepHelper={stepHelper} />;
+            } else if (node.type == 'TYPE_CHECKLIST') {
+              const edges = EdgeChecklist({
+                node: node,
+                stepHelper: stepHelper
+              });
+              return <NodeChecklist key={key} processId={processId!!} node={{ ...node, ...{ edges: edges } }} stepHelper={stepHelper} />;
+            } else if (node.type == 'TYPE_WAIT') {
+              const edges = EdgeWait({
+                node: node
+              });
+              return <NodeWait key={key} processId={processId!!} node={{ ...node, ...{ edges: edges } }} stepHelper={stepHelper} />;
+            } else if (node.type == 'TYPE_SITE') {
+              const edges = EdgeSite({
+                node: node,
+                stepHelper: stepHelper
+              });
+              return <NodeSite key={key} processId={processId!!} node={{ ...node, ...{ edges: edges } }} stepHelper={stepHelper} />;
+            } else if (node.type == 'TYPE_PROCESS') {
+              return <NodeProcess key={key} processId={processId!!} node={node} />;
+            } else {
+              const edges = EdgeAction({
+                node: node,
+                stepHelper: stepHelper
+              });
+              return <NodeAction key={key} processId={processId!!} node={{ ...node, ...{ edges: edges } }} stepHelper={stepHelper} />;
+            }
+          })}
+          {closedX > 0 && <NodeClosed edges={nodeEdges.closed} processId={processId!!} closedX={closedX} />}
+        </Box>
+      </Stack>
+      <SideBar anchor="right" width={matchDownSM ? '100%' : sidebarSize} overlay={1} variant="permanent" open={stepOpen.open}>
+        {stepOpen.edit ? (
+          <DiagramView type={stepOpen.type} sourceId={stepOpen.sourceId} processId={processId} data={stepOpen.data} onClose={onStepClose} />
+        ) : (
+          <DiagramWrite type={stepOpen.type} sourceId={stepOpen.sourceId} processId={processId} onClose={onStepClose} />
+        )}
+      </SideBar>
+      {/* <SideBar anchor="right" width={matchDownSM ? '100%' : 400} overlay={1} variant="permanent" open={stageOpen.open}>
+        {stageOpen.edit ? (
+          <DiagramView type="stage" processId={processId} onClose={onStageClose} data={stageOpen.stage} />
+        ) : (
+          <DiagramWrite type="stage" processId={processId} onClose={onStageClose} />
+        )}
+      </SideBar>
+      <SideBar anchor="right" width={matchDownSM ? '100%' : 400} overlay={1} variant="permanent" open={stageOpen.open}>
+        {closeOpen.edit ? (
+          <DiagramView type="stage" processId={processId} onClose={onStageClose} data={stageOpen.stage} />
+        ) : (
+          <DiagramWrite type="stage" processId={processId} onClose={onStageClose} />
+        )}
+      </SideBar> */}
+      {/* 
+          <ModalContainer
+            isOpen={!stepOpen.edit && stepOpen.sourceId != ''}
+            isView={true}
+            onClose={onStepClose}
+            title={'Create Step'}
+            viewComponent={
+              !stepOpen.edit &&
+              stepOpen.sourceId && <StepWrite processId={processId!} onClose={onStepClose} />
+            }
+            isFooter={false}
+          />
+
+          <ModalContainer
+            isOpen={stepOpen.edit && stepOpen.sourceId != ''}
+            isView={true}
+            onClose={onStepClose}
+            title={'View Step'}
+            viewComponent={
+              stepOpen.edit &&
+              stepOpen.sourceId && <StepView processId={processId!} stepId={stepOpen.sourceId} />
+            }
+            isFooter={false}
+          />
+
+          <ModalContainer
+            isOpen={stageView.sourceId != ''}
+            isView={stageView.stage != null}
+            onClose={onStageViewClose}
+            title={stageView.stage != null ? 'View Stage' : 'Create Stage'}
+            modalSize={'wd-400'}
+            viewComponent={
+              stageView.stage != null && (
+                <StageView processId={processId!} stage={stageView.stage!} />
+              )
+            }
+            writeComponent={
+              stageView.sourceId != '' && (
+                <StageWrite processId={processId!} onClose={onStageViewClose} />
+              )
+            }
+            isFooter={false}
+          />
+
+          <ModalContainer
+            isOpen={closedOpen.open}
+            isView={closedOpen.sourceId != ''}
+            onClose={onClosedStatusClose}
+            title={closedOpen.sourceId != '' ? 'View Closed Status' : 'Create Closed Status'}
+            writeComponent={<ClosedWrite processId={processId!} onClose={onClosedStatusClose} />}
+            viewComponent={
+              closedOpen.sourceId != '' && (
+                <ClosedView processId={processId!} stepId={closedOpen.sourceId!} />
+              )
+            }
+            isFooter={false}
+          /> */}
+    </>
+  );
+}
+
+export default DiagramContainer;

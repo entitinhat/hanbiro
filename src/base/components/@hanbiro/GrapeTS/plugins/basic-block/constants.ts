@@ -1,0 +1,9 @@
+export const hNavbarType = 'h-navbar',
+  navbarRef = 'navbar',
+  navbarItemsRef = 'navbar-items',
+  menuRef = 'navbar-menu',
+  tabsType = 'tabs';
+export const keyCustomCode = 'custom-code-plugin__code';
+export const customCodeType = 'custom-code';
+export const commandNameCustomCode = 'custom-code:open-modal';
+export const typeSelect = 'select';

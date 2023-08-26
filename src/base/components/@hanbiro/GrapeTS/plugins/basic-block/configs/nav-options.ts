@@ -1,0 +1,15 @@
+export default {
+  defaultStyle: 1,
+  navbarClsPfx: 'navbar',
+  labelNavbar: 'Navbar',
+  labelNavbarContainer: 'Navbar Container',
+  labelMenu: 'Navbar Menu',
+  labelMenuLink: 'Menu link',
+  labelBurger: 'Burger',
+  labelBurgerLine: 'Burger Line',
+  labelNavbarBlock: 'Navbar',
+  //labelNavbarCategory: 'Extra',
+  labelHome: 'Home',
+  labelAbout: 'About',
+  labelContact: 'Contact',
+};

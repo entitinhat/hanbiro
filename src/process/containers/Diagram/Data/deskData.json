@@ -1,0 +1,761 @@
+{
+  "stages": [
+    {
+      "id": "1",
+      "name": "New",
+      "order": 1,
+      "property": "PROPERTY_NEW",
+      "width": 250,
+      "description": "New"
+    },
+    {
+      "id": "2",
+      "name": "Assign Tickets",
+      "order": 2,
+      "property": "PROPERTY_LINK",
+      "width": 380,
+      "description": "Assign Tickets"
+    },
+    {
+      "id": "3",
+      "name": "Open",
+      "order": 3,
+      "property": "PROPERTY_LINK",
+      "width": 110,
+      "description": "Open"
+    },
+    {
+      "id": "4",
+      "name": "Resolved",
+      "order": 4,
+      "property": "PROPERTY_LINK",
+      "width": 580,
+      "description": "Resolved"
+    },
+    {
+      "id": "5",
+      "name": "Closed",
+      "order": 5,
+      "property": "PROPERTY_CLOSE",
+      "width": 110,
+      "description": "Closed"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "horizontal-1",
+      "type": "TYPE_ACTION",
+      "label": "New",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_FORWARD",
+      "sources": [
+        {
+          "id": "horizontal-1-right",
+          "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+        }
+      ],
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "horizontal-2",
+      "type": "TYPE_ACTION",
+      "label": "Open",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_FORWARD",
+      "sources": [
+        {
+          "id": "horizontal-2-right",
+          "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+        },
+        {
+          "id": "horizontal-2-bottom",
+          "direction": "DIRECTION_FORWARD_OUTGOING_BOTTOM"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-2-left",
+          "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+        }
+      ],
+      "position": {
+        "x": 550,
+        "y": 0
+      }
+    },
+    {
+      "id": "horizontal-3",
+      "type": "TYPE_ACTION",
+      "label": "Assignment Queue",
+      "method": "ACTION_METHOD_AUTO",
+      "shape": "SHAPE_FORWARD",
+      "sources": [
+        {
+          "id": "horizontal-3-right",
+          "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-3-left",
+          "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+        }
+      ],
+      "position": {
+        "x": 180,
+        "y": 80
+      }
+    },
+    {
+      "id": "horizontal-4",
+      "type": "TYPE_ACTION",
+      "label": "Unassigned",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_FORWARD",
+      "sources": [
+        {
+          "id": "horizontal-4-right",
+          "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-4-left",
+          "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+        }
+      ],
+      "position": {
+        "x": 370,
+        "y": 150
+      }
+    },
+    {
+      "id": "horizontal-5",
+      "type": "TYPE_ACTION",
+      "label": "Forwarding to External",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_BACKWARD",
+      "sources": [
+        {
+          "id": "horizontal-5-left",
+          "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-5-top",
+          "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+        }
+      ],
+      "position": {
+        "x": 550,
+        "y": 300
+      }
+    },
+    {
+      "id": "horizontal-6",
+      "type": "TYPE_SITE",
+      "label": "Desk Site",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_BACKWARD",
+      "sources": [
+        {
+          "id": "horizontal-6-left",
+          "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-6-right",
+          "direction": "DIRECTION_BACKWARD_INCOMING_RIGHT"
+        }
+      ],
+      "position": {
+        "x": 380,
+        "y": 300
+      }
+    },
+    {
+      "id": "horizontal-7",
+      "type": "TYPE_ACTION",
+      "label": "Request to Customer",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_BACKWARD",
+      "sources": [
+        {
+          "id": "horizontal-7-left",
+          "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-7-top",
+          "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+        }
+      ],
+      "position": {
+        "x": 550,
+        "y": 380
+      }
+    },
+    {
+      "id": "horizontal-8",
+      "type": "TYPE_STATUS",
+      "label": "Internal Task",
+      "method": "ACTION_METHOD_NONE",
+      "shape": "SHAPE_BACKWARD",
+      "sources": [
+        {
+          "id": "horizontal-8-left",
+          "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-8-top",
+          "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+        }
+      ],
+      "position": {
+        "x": 550,
+        "y": 460
+      }
+    },
+    {
+      "id": "horizontal-9",
+      "type": "TYPE_ACTION",
+      "label": "Send by Email",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_FORWARD",
+      "sources": [
+        {
+          "id": "horizontal-9-right",
+          "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+        },
+        {
+          "id": "horizontal-9-bottom",
+          "direction": "DIRECTION_FORWARD_OUTGOING_BOTTOM"
+        },
+        {
+          "id": "horizontal-9-middle",
+          "direction": "DIRECTION_FORWARD_OUTGOING_MIDDLE"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-9-left",
+          "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+        }
+      ],
+      "position": {
+        "x": 750,
+        "y": 150
+      }
+    },
+    {
+      "id": "horizontal-30",
+      "type": "TYPE_ACTION",
+      "label": "Review Email",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_BACKWARD",
+      "sources": [
+        {
+          "id": "horizontal-30-left",
+          "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-30-top",
+          "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+        }
+      ],
+      "position": {
+        "x": 750,
+        "y": 350
+      }
+    },
+    {
+      "id": "horizontal-31",
+      "type": "TYPE_ACTION",
+      "label": "Reply Email",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_BACKWARD",
+      "sources": [
+        {
+          "id": "horizontal-31-left",
+          "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-31-top",
+          "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+        },
+        {
+          "id": "horizontal-31-left",
+          "direction": "DIRECTION_BACKWARD_INCOMING_LEFT"
+        }
+      ],
+      "position": {
+        "x": 900,
+        "y": 280
+      }
+    },
+    {
+      "id": "horizontal-32",
+      "type": "TYPE_ACTION",
+      "label": "Email Again",
+      "method": "ACTION_METHOD_AUTO",
+      "shape": "SHAPE_BACKWARD",
+      "sources": [
+        {
+          "id": "horizontal-32-left",
+          "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+        }
+      ],
+      "position": {
+        "x": 900,
+        "y": 350
+      }
+    },
+    {
+      "id": "horizontal-10",
+      "type": "TYPE_SITE",
+      "label": "Desk Site",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_FORWARD",
+      "sources": [
+        {
+          "id": "horizontal-10-top",
+          "direction": "DIRECTION_FORWARD_OUTGOING_TOP"
+        },
+        {
+          "id": "horizontal-10-right",
+          "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+        },
+        {
+          "id": "horizontal-10-middle",
+          "direction": "DIRECTION_FORWARD_OUTGOING_MIDDLE"
+        }
+      ],
+      "targets": [
+        {
+          "id": "horizontal-10-left",
+          "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+        }
+      ],
+      "position": {
+        "x": 1050,
+        "y": 150
+      }
+    },
+    {
+      "id": "horizontal-11",
+      "type": "TYPE_ACTION",
+      "label": "Satification",
+      "method": "ACTION_METHOD_MANUAL",
+      "shape": "SHAPE_BACKWARD",
+      "targets": [
+        {
+          "id": "horizontal-11-top",
+          "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+        }
+      ],
+      "position": {
+        "x": 1110,
+        "y": 300
+      }
+    },
+    {
+      "id": "horizontal-group",
+      "type": "TYPE_GROUP",
+      "targets": [
+        {
+          "id": "horizontal-group-left",
+          "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+        }
+      ],
+      "position": {
+        "x": 1250,
+        "y": 0
+      }
+    },
+    {
+      "id": "horizontal-12",
+      "type": "TYPE_CLOSE",
+      "label": "Closed",
+      "position": {
+        "x": 8,
+        "y": 10
+      },
+      "parent": "horizontal-group"
+    },
+    {
+      "id": "horizontal-13",
+      "type": "TYPE_CLOSE",
+      "label": "Canceled",
+      "position": {
+        "x": 8,
+        "y": 60
+      },
+      "parent": "horizontal-group"
+    },
+    {
+      "id": "horizontal-14",
+      "type": "TYPE_CLOSE",
+      "label": "Deleted",
+      "position": {
+        "x": 8,
+        "y": 110
+      },
+      "parent": "horizontal-group"
+    },
+    {
+      "id": "horizontal-15",
+      "type": "TYPE_CLOSE",
+      "label": "Merged",
+      "position": {
+        "x": 8,
+        "y": 160
+      },
+      "parent": "horizontal-group"
+    },
+    {
+      "id": "horizontal-16",
+      "type": "TYPE_CLOSE",
+      "label": "Denied",
+      "position": {
+        "x": 8,
+        "y": 210
+      },
+      "parent": "horizontal-group"
+    }
+  ],
+  "edges": [
+    {
+      "id": "horizontal-e1-2",
+      "label": "Assigned",
+      "source": "horizontal-1",
+      "sourcePosition": {
+        "id": "horizontal-1-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-2",
+      "targetPosition": {
+        "id": "horizontal-2-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      },
+      "mutiple": "MULTIPLE_PARALLEL"
+    },
+    {
+      "id": "horizontal-e1-3",
+      "source": "horizontal-1",
+      "sourcePosition": {
+        "id": "horizontal-1-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-3",
+      "targetPosition": {
+        "id": "horizontal-3-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      },
+      "mutiple": "MULTIPLE_PARALLEL"
+    },
+    {
+      "id": "horizontal-e1-4",
+      "source": "horizontal-3",
+      "sourcePosition": {
+        "id": "horizontal-3-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-4",
+      "targetPosition": {
+        "id": "horizontal-4-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-15",
+      "source": "horizontal-3",
+      "sourcePosition": {
+        "id": "horizontal-3-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-2",
+      "targetPosition": {
+        "id": "horizontal-2-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-5",
+      "source": "horizontal-4",
+      "sourcePosition": {
+        "id": "horizontal-4-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-2",
+      "targetPosition": {
+        "id": "horizontal-2-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-6",
+      "source": "horizontal-2",
+      "sourcePosition": {
+        "id": "horizontal-2-bottom",
+        "direction": "DIRECTION_FORWARD_OUTGOING_BOTTOM"
+      },
+      "target": "horizontal-5-top",
+      "targetPosition": {
+        "id": "horizontal-2-left",
+        "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+      }
+    },
+    {
+      "id": "horizontal-e1-18",
+      "source": "horizontal-2",
+      "sourcePosition": {
+        "id": "horizontal-2-bottom",
+        "direction": "DIRECTION_FORWARD_OUTGOING_BOTTOM"
+      },
+      "target": "horizontal-4",
+      "targetPosition": {
+        "id": "horizontal-5-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-19",
+      "source": "horizontal-2",
+      "sourcePosition": {
+        "id": "horizontal-2-bottom",
+        "direction": "DIRECTION_FORWARD_OUTGOING_BOTTOM"
+      },
+      "target": "horizontal-7",
+      "targetPosition": {
+        "id": "horizontal-7-top",
+        "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+      }
+    },
+    {
+      "id": "horizontal-e1-20",
+      "source": "horizontal-2",
+      "sourcePosition": {
+        "id": "horizontal-2-bottom",
+        "direction": "DIRECTION_FORWARD_OUTGOING_BOTTOM"
+      },
+      "target": "horizontal-8",
+      "targetPosition": {
+        "id": "horizontal-8-top",
+        "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+      }
+    },
+    {
+      "id": "horizontal-e1-7",
+      "source": "horizontal-5",
+      "sourcePosition": {
+        "id": "horizontal-5-left",
+        "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+      },
+      "target": "horizontal-6",
+      "targetPosition": {
+        "id": "horizontal-6-right",
+        "direction": "DIRECTION_BACKWARD_INCOMING_RIGHT"
+      }
+    },
+    {
+      "id": "horizontal-e1-8",
+      "source": "horizontal-6",
+      "sourcePosition": {
+        "id": "horizontal-6-left",
+        "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+      },
+      "target": "horizontal-2",
+      "targetPosition": {
+        "id": "horizontal-2-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-9",
+      "source": "horizontal-7",
+      "sourcePosition": {
+        "id": "horizontal-7-left",
+        "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+      },
+      "target": "horizontal-6",
+      "targetPosition": {
+        "id": "horizontal-6-right",
+        "direction": "DIRECTION_BACKWARD_INCOMING_RIGHT"
+      }
+    },
+    {
+      "id": "horizontal-e1-10",
+      "source": "horizontal-8",
+      "sourcePosition": {
+        "id": "horizontal-8-left",
+        "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+      },
+      "target": "horizontal-2",
+      "targetPosition": {
+        "id": "horizontal-2-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-11",
+      "label": "Resolved",
+      "source": "horizontal-2",
+      "sourcePosition": {
+        "id": "horizontal-2-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-9",
+      "targetPosition": {
+        "id": "horizontal-9-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-16",
+      "source": "horizontal-9",
+      "sourcePosition": {
+        "id": "horizontal-9-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-10",
+      "targetPosition": {
+        "id": "horizontal-10-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-12",
+      "source": "horizontal-10",
+      "sourcePosition": {
+        "id": "horizontal-10-top",
+        "direction": "DIRECTION_FORWARD_OUTGOING_TOP"
+      },
+      "target": "horizontal-2",
+      "targetPosition": {
+        "id": "horizontal-2-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-13",
+      "label": "Suvey Submit",
+      "source": "horizontal-10",
+      "sourcePosition": {
+        "id": "horizontal-10-middle",
+        "direction": "DIRECTION_FORWARD_OUTGOING_MIDDLE"
+      },
+      "target": "horizontal-11",
+      "targetPosition": {
+        "id": "horizontal-11-top",
+        "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+      }
+    },
+    {
+      "id": "horizontal-e1-14",
+      "label": "Closed",
+      "source": "horizontal-2",
+      "sourcePosition": {
+        "id": "horizontal-2-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-group",
+      "targetPosition": {
+        "id": "horizontal-group-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      },
+      "property": "PROPERTY_CLOSED"
+    },
+    {
+      "id": "horizontal-e1-23",
+      "source": "horizontal-10",
+      "sourcePosition": {
+        "id": "horizontal-10-right",
+        "direction": "DIRECTION_FORWARD_OUTGOING_RIGHT"
+      },
+      "target": "horizontal-group",
+      "targetPosition": {
+        "id": "horizontal-group-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      },
+      "property": "PROPERTY_CLOSED"
+    },
+    {
+      "id": "horizontal-e1-30",
+      "label": "Bounced",
+      "source": "horizontal-9",
+      "sourcePosition": {
+        "id": "horizontal-9-bottom",
+        "direction": "DIRECTION_FORWARD_OUTGOING_BOTTOM"
+      },
+      "target": "horizontal-30",
+      "targetPosition": {
+        "id": "horizontal-30-top",
+        "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+      }
+    },
+    {
+      "id": "horizontal-e1-31",
+      "source": "horizontal-30",
+      "sourcePosition": {
+        "id": "horizontal-30-left",
+        "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+      },
+      "target": "horizontal-9",
+      "targetPosition": {
+        "id": "horizontal-9-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-32",
+      "source": "horizontal-31",
+      "sourcePosition": {
+        "id": "horizontal-31-left",
+        "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+      },
+      "target": "horizontal-9",
+      "targetPosition": {
+        "id": "horizontal-9-left",
+        "direction": "DIRECTION_FORWARD_INCOMING_LEFT"
+      }
+    },
+    {
+      "id": "horizontal-e1-33",
+      "source": "horizontal-9",
+      "sourcePosition": {
+        "id": "horizontal-9-middle",
+        "direction": "DIRECTION_FORWARD_OUTGOING_MIDDLE"
+      },
+      "target": "horizontal-31",
+      "targetPosition": {
+        "id": "horizontal-31-top",
+        "direction": "DIRECTION_BACKWARD_INCOMING_TOP"
+      }
+    },
+    {
+      "id": "horizontal-e1-34",
+      "source": "horizontal-32",
+      "sourcePosition": {
+        "id": "horizontal-32-left",
+        "direction": "DIRECTION_BACKWARD_OUTGOING_LEFT"
+      },
+      "target": "horizontal-31",
+      "targetPosition": {
+        "id": "horizontal-31-left",
+        "direction": "DIRECTION_BACKWARD_INCOMING_LEFT"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+export const OAUTH_SERVER = 'https://id.habin.io'; // 'https://id.vora.net'
+export const OAUTH_LOCAL_SERVER = 'https://id.habin.io'; //'http://localhost:8081';
+export const OAUTH_SIGNUP_ENDPOINT = '/sign-up';
+export const AUTHORIZE_ENDPOINT = '/oauth/authorize';
+export const TOKEN_ENDPOINT = '/oauth/token';
+export const OAUTH_CLIENT_ID = 'wwdcaoenftbwfrd1kkjiua31ua';
+export const OAUTH_CLIENT_SECRET = '66786bdab495962e99992f8a1d071dfa';
+export const DEFAULT = 'desk.ncrm.io';
+const { host, protocol } = window.location;
+export const REDIRECT_URI = `${protocol}//${host}/sign-in/callback`;

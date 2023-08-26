@@ -1,0 +1,1224 @@
+@import '@base/assets/scss/_mixin';
+
+$diagram-colors: (
+  forward: (
+    color: var(--color-success),
+    text-bg: transparent,
+    border-width: 6px 0 0 0,
+    arrow: left
+  ),
+  backward: (
+    color: #f43,
+    // text-bg: #fff,
+    border-width: 0 0 0 3px,
+    arrow: top
+  ),
+  other-process: (
+    color: var(--color-info),
+    text-bg: var(--color-info),
+    border-width: 6px 0 0 6px,
+    arrow: left
+  ),
+  middle: (
+    color: var(--color-warning),
+    // text-bg: var(--color-warning),
+    border-width: 0 0 0 3px,
+    arrow: top
+  ),
+  bottom: (
+    color: var(--color-warning),
+    text-bg: var(--color-warning),
+    border-width: 0 0 0 3px,
+    arrow: top
+  ),
+  split: (
+    color: #88d40e
+  ),
+  split-choice: (
+    color: var(--color-success),
+    text-bg: transparent,
+    border-width: 0 0 6px 6px,
+    arrow: left
+  ),
+  split-parallel: (
+    color: #88d40e,
+    text-bg: transparent,
+    border-width: 0 0 6px 6px,
+    arrow: left
+  ),
+  join: (
+    color: var(--color-success),
+    text-bg: transparent,
+    border-width: 0 6px 6px 0
+  ),
+  back: (
+    color: var(--color-red),
+    text-bg: transparent,
+    border-width: 3px 0 0 0,
+    arrow: right
+  )
+);
+
+$step-colors: () !default;
+$step-colors: map-merge(
+  (
+    'status': #43a5f6,
+    'action': #3fd0b6,
+    'wait': #d0d413,
+    'site': #2b63f5,
+    'criteria': #552bf3,
+    'checklist': #f60,
+    'simple': #ffc107
+  ),
+  $step-colors
+);
+
+.process-header {
+  display: flex;
+  align-items: center;
+  height: 55px;
+  padding: 0 1.25rem;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  .process-name {
+    margin-bottom: 0;
+    font-size: 1.375rem;
+  }
+}
+
+.stage-wrap {
+  display: flex;
+  .stage-item {
+    // flex-shrink: 0;
+
+    &.stage-open {
+      margin-left: 0px;
+      padding-left: 1.875rem;
+      border-radius: 0.25rem 0 0 0.25rem;
+      &::before {
+        content: none;
+      }
+    }
+
+    &.stage-closed {
+      margin-right: 24px;
+      padding-right: 1.875rem;
+      border-radius: 0 0.25rem 0.25rem 0;
+      &::after {
+        content: none;
+      }
+    }
+
+    &.stage-open,
+    &.stage-closed {
+      background-color: var(--color-gray-200);
+      &::before {
+        border-color: var(--color-gray-200);
+        border-left-color: transparent;
+      }
+      &::after {
+        border-color: transparent;
+        border-left-color: var(--color-gray-200);
+      }
+    }
+  }
+
+  .gutter {
+    // position: relative;
+    // left: -55px;
+    // cursor: col-resize;
+    // background-color: red;
+    background-color: transparent;
+
+    background-repeat: no-repeat;
+    background-position: 50%;
+    // flex-shrink: 0;
+    // flex-grow: 0;
+  }
+  .__dbk__gutter {
+    // position: relative;
+    // left: -15px;
+    background-color: transparent;
+    cursor: col-resize;
+    z-index: 1000;
+  }
+  .__dbk__gutter.Dark,
+  .gutter.gutter-horizontal {
+    height: 30px;
+    margin-top: 10px;
+    background: transparent;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+  }
+
+  .__dbk__dragger.Dark {
+    background-color: transparent;
+  }
+
+  .__dbk__dragger.Horizontal {
+    width: 0px;
+    height: 30px;
+  }
+
+  .pane {
+    flex-shrink: 1;
+    flex-grow: 1;
+    position: relative;
+  }
+}
+
+.stage-item {
+  position: relative;
+  // width: 220px;
+  min-width: 130px;
+  height: 50px;
+  min-height: 50px;
+  margin-left: 45px;
+  padding: 0.625rem;
+  background-color: var(--color-gray-300);
+  white-space: nowrap;
+  font-weight: 600;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    border: 1px solid transparent;
+  }
+  &::before {
+    right: 100%;
+    border-width: 25px 18px;
+    border-color: var(--color-gray-300);
+    border-left-color: transparent;
+  }
+  &::after {
+    left: 100%;
+    border-width: 29px 22px;
+    top: -4px;
+    border-color: transparent;
+    border-left-color: var(--color-gray-300);
+  }
+}
+
+.diagram-item-wrap {
+  position: absolute;
+
+  .btn-add {
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    padding: 0;
+    color: var(--color-white);
+    text-align: center;
+    font-size: 18px;
+    line-height: 21px;
+    border-radius: 50%;
+
+    @each $map, $value in $diagram-colors {
+      &.btn-#{$map} {
+        background-color: map-get($value, color);
+      }
+    }
+  }
+}
+
+.site-link {
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  margin-top: -20px;
+  margin-left: 20px;
+  padding: 0 0.3125rem;
+  &::after {
+    opacity: 1;
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: 25px;
+    height: 0;
+    margin-left: -24px;
+    box-shadow: none;
+    border-top: 3px solid map-get($step-colors, site);
+  }
+}
+
+.diagram-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0.625rem;
+  background-color: var(--color-white);
+
+  border-radius: 0.25rem;
+
+  @each $color, $value in $step-colors {
+    &.diagram-#{$color} {
+      &,
+      .diagram-item-status-detail {
+        background-color: $value;
+        color: var(--color-white);
+      }
+    }
+  }
+
+  &.manual,
+  &.automatic {
+    &::after {
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      width: 15px;
+      height: 15px;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 15px;
+      color: var(--color-white);
+      font-weight: 600;
+      font-size: 0.75rem;
+      box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+
+      border-radius: 0.25rem;
+    }
+  }
+
+  &.manual {
+    &::after {
+      content: 'm';
+      background-color: #ff5722;
+    }
+  }
+
+  &.automatic {
+    &::after {
+      content: 'a';
+      background-color: var(--color-success);
+    }
+  }
+
+  &.diagram-status,
+  &.diagram-simple {
+    width: 120px;
+    min-width: 120px;
+  }
+
+  &.diagram-status {
+    height: 40px;
+  }
+
+  &.diagram-simple {
+    height: 30px;
+    padding: 0.25rem;
+  }
+
+  &.diagram-simple.not-forward {
+    width: 90px;
+    min-width: 90px;
+    padding: 4px;
+  }
+  &.diagram-simple {
+    border-radius: 2rem;
+  }
+  &.diagram-action,
+  &.diagram-site {
+    width: 120px;
+    height: 80px;
+  }
+  &.diagram-action.not-forward {
+    height: 45px;
+    padding: 4px;
+  }
+  &.diagram-site {
+    border: 2px dashed #183783;
+    .diagram-item-actions {
+      margin-left: 2px;
+    }
+  }
+  &.diagram-site.not-forward {
+    height: 45px;
+  }
+  // &.shape_middle.diagram-action {
+  //   .diagram-item-actions {
+  // margin-left: -50px;
+  // margin-top: -25px;
+  //   }
+  // }
+  &.diagram-criteria {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    padding: 0;
+    background: none;
+
+    &.with-boolean-direction {
+      margin-bottom: 4rem;
+    }
+
+    .criteria-shape {
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 1px solid transparent;
+        border-width: 60px 60px 60px 0;
+        border-right-color: map-get($step-colors, criteria);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 60px;
+        border: 1px solid transparent;
+        border-width: 60px 0 60px 60px;
+        border-left-color: map-get($step-colors, criteria);
+      }
+    }
+    .diagram-item-name {
+      position: absolute;
+      top: 45px;
+      left: 0;
+      width: 100%;
+      color: var(--color-orange);
+    }
+
+    .direction-true {
+      position: absolute;
+      top: 49%;
+      left: 99%;
+      width: 4rem;
+      border-bottom: 2px solid map-get($step-colors, criteria);
+      &::before {
+        content: 'TRUE';
+        position: absolute;
+        bottom: 100%;
+        width: 100%;
+        text-align: center;
+        color: var(--color-gray-500);
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        top: -4px;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border: 2px solid map-get($step-colors, criteria);
+        border-width: 2px 2px 0 0;
+        transform: rotate(45deg);
+      }
+      .true-status {
+        position: absolute;
+        left: 100%;
+        margin: -1rem 0 0 0.3125rem;
+        padding: 0.3125rem 1rem;
+        // background-color: map-get($step-colors, status);
+        font-weight: 600;
+        white-space: nowrap;
+        border-radius: 0.25rem;
+      }
+
+      .immediate-action {
+        left: 100%;
+      }
+    }
+    .direction-false {
+      position: absolute;
+      top: 99%;
+      left: 49%;
+      height: 4rem;
+      border-left: 2px solid map-get($step-colors, criteria);
+
+      &::before {
+        content: 'FALSE';
+        position: absolute;
+        left: 100%;
+        padding: 0.3125rem;
+        color: var(--color-gray-500);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: -6px;
+        bottom: 0;
+        width: 10px;
+        height: 10px;
+        border: 2px solid map-get($step-colors, criteria);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+      .false-status {
+        position: absolute;
+        top: 100%;
+        margin: 0.3125rem 0 0 -2.8125rem;
+        padding: 0.3125rem 1rem;
+        // background-color: map-get($step-colors, status);
+        font-weight: 600;
+        white-space: nowrap;
+        border-radius: 0.25rem;
+      }
+
+      .immediate-action {
+        top: 100%;
+        margin-top: 0.3125rem;
+        margin-left: -65px;
+      }
+    }
+    .immediate-action {
+      position: absolute;
+      margin: -1rem 0 0 0.3125rem;
+      color: var(--color-gray-500);
+
+      .action-header {
+        position: relative;
+        padding: 0.3125rem 1rem;
+        background-color: var(--color-gray-100);
+        border-bottom: 1px solid var(--color-border);
+        white-space: nowrap;
+        text-transform: uppercase;
+
+        &::after {
+          position: absolute;
+          content: '';
+          left: 50%;
+          top: 100%;
+          width: 10px;
+          height: 10px;
+          margin-top: -5px;
+          margin-left: -7px;
+          background: var(--light);
+          border: 1px solid var(--color-border);
+          border-width: 0 0 1px 1px;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+
+  &.diagram-wait {
+    width: 120px;
+    height: 120px;
+    padding: 0;
+    border-radius: 50%;
+    .diagram-item-name {
+      position: absolute;
+      top: 45px;
+      left: 0;
+      width: 100%;
+      color: darken(map-get($step-colors, wait), 20);
+    }
+  }
+  &.diagram-checklist {
+    width: 120px;
+    height: 80px;
+    transform: skewX(-5deg);
+
+    .checklist-no {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      .btn {
+        margin-left: auto;
+        padding: 0.125rem;
+        background: none;
+        border: 0;
+        color: var(--color-white);
+        font-weight: 600;
+      }
+
+      .dropdown-menu {
+        padding-left: 0.625rem;
+        padding-right: 0.625rem;
+        border: 0;
+      }
+    }
+  }
+
+  &.diagram-trigger {
+    background-color: transparent;
+  }
+
+  &.diagram-other-process {
+    width: 125px;
+    height: 30px;
+    padding: 0.25rem 0.625rem;
+    background: none;
+    border: 1px solid map-get(map-get($diagram-colors, other-process), color);
+    color: map-get(map-get($diagram-colors, other-process), color);
+    .diagram-item-name {
+      text-align: left;
+    }
+  }
+
+  &.diagram-action.mini,
+  &.diagram-site.mini {
+    width: 70px;
+    height: 40px;
+    padding: 4px;
+  }
+
+  &.diagram-wait.mini {
+    width: 70px;
+    height: 70px;
+    padding: 4px;
+    .diagram-item-name {
+      top: 25px;
+    }
+  }
+
+  &.diagram-criteria.mini {
+    width: 70px;
+    height: 70px;
+    padding: 4px;
+    .criteria-shape {
+      &::before {
+        border-width: 35px 35px 35px 0;
+      }
+
+      &::after {
+        left: 35px;
+        border-width: 35px 0 35px 35px;
+      }
+    }
+    .diagram-item-name {
+      top: 25px;
+    }
+  }
+
+  &.diagram-checklist.mini {
+    width: 70px;
+    height: 40px;
+    padding: 4px;
+  }
+
+  &.diagram-other-process.mini {
+    width: 70px;
+    height: 30px;
+    padding: 4px;
+    .diagram-item-name {
+      text-align: center;
+    }
+  }
+
+  &.diagram-status.mini,
+  &.diagram-simple.mini {
+    padding: 4px;
+    width: 70px;
+    min-width: 70px;
+  }
+
+  &.diagram-status.mini {
+    height: 30px;
+  }
+
+  &.diagram-simple.mini {
+    height: 30px;
+  }
+
+  .diagram-item-name {
+    flex-shrink: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: normal;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .diagram-item-status-wrap {
+    display: flex;
+    align-items: center;
+    margin-top: 0.3125rem;
+    .diagram-item-status {
+      flex-grow: 1;
+      overflow: hidden;
+      margin: 0.125rem;
+      padding: 0.125rem;
+      border: 1px dashed var(--color-white);
+      line-height: 1em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .btn {
+      padding: 0.125rem;
+      border: 1px dashed var(--color-white);
+      line-height: 1em;
+      color: var(--white-color);
+
+      > svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+    .diagram-item-status-detail {
+      min-width: 120px;
+      width: 120px;
+      margin-right: -0.625rem;
+      padding: 0 0.625rem 0.625rem;
+      border: 0;
+    }
+  }
+
+  .diagram-item-status-detail {
+    .custom-control .custom-control-input:not(:checked) + label > span {
+      color: var(--color-white) !important;
+    }
+  }
+
+  .diagram-item-actions {
+    position: absolute;
+    top: -20px;
+    left: 100%;
+    z-index: 1;
+    margin-left: 12px;
+    // background-color: var(--background-container);
+    white-space: nowrap;
+    > .btn {
+      padding: 0 0.3125rem;
+      line-height: 1em;
+      > svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+}
+
+.diagram-direction-text {
+  position: absolute;
+  padding: 0.0625rem 0.3125rem;
+}
+
+.diagram-direction-forward {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  width: 130px;
+  margin-top: -3px;
+  border-style: solid;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 100%;
+    margin-top: -11px;
+  }
+  &.is-edit {
+    width: 100px;
+  }
+
+  .diagram-direction-text {
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    color: #000;
+  }
+
+  &[class*='with-split-'] {
+    width: 60px;
+    margin-left: 70px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 100%;
+      bottom: 0;
+      width: 70px;
+      border-top: 6px solid map-get(map-get($diagram-colors, forward), color);
+    }
+    &.is-edit {
+      width: 40px;
+    }
+  }
+
+  &.with-split-parallel {
+    border-color: map-get(map-get($diagram-colors, split-parallel), color);
+    &::before {
+      border-left-color: map-get(map-get($diagram-colors, split-parallel), color);
+    }
+    .diagram-direction-text {
+      margin-left: -70px;
+    }
+  }
+
+  &.for-simple-action {
+    top: auto;
+    bottom: 50%;
+    width: 105px;
+    margin-left: 25px;
+    margin-bottom: -3px;
+    border-width: 6px 0 0 6px;
+    &::after {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      content: '';
+      display: block;
+      width: 2rem;
+      margin-left: -2rem;
+      margin-top: -0.375rem;
+      border-top: 6px solid map-get(map-get($diagram-colors, forward), color);
+    }
+    &.is-edit {
+      width: 75px;
+    }
+  }
+}
+
+.shape_backward.diagram-simple + .diagram-direction-forward {
+  width: 160px;
+  &.is-edit {
+    width: 130px;
+  }
+}
+
+.shape_backward + .with-split-choice {
+  width: 60px;
+  &.is-edit {
+    width: 40px;
+  }
+}
+
+.not-forward > .diagram-item-name {
+  font-size: 12px;
+}
+
+.diagram-direction-vertical {
+  position: absolute;
+  border-style: solid;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    margin-left: -10px;
+  }
+
+  .diagram-direction-text {
+    top: 10px;
+    right: 100%;
+    color: #000;
+  }
+
+  &.diagram-direction-middle {
+    right: 0;
+    height: 20px;
+    &.is-edit {
+      height: 17px;
+    }
+    .diagram-direction-text {
+      left: 100%;
+      right: auto;
+      margin-left: -4px;
+      margin-top: -10px;
+      font-size: 11px;
+      color: gray;
+    }
+  }
+
+  &.diagram-direction-bottom {
+    left: 50%;
+    height: 5px;
+    &.is-edit {
+      height: 5px;
+    }
+  }
+
+  &.diagram-direction-backward {
+    left: 50%;
+    height: 59px;
+
+    &::before {
+      margin-left: -10px;
+    }
+
+    &.is-edit {
+      height: 59px;
+    }
+
+    .diagram-direction-text {
+      font-size: 11px; //2
+      color: gray;
+    }
+  }
+}
+.diagram-direction-back {
+  position: absolute;
+  right: 100%;
+}
+
+.diagram-direction-backward.diagram-direction-criteria,
+.diagram-direction-backward.diagram-direction-wait {
+  height: 39px;
+  &.is-edit {
+    height: 39px;
+  }
+}
+
+.diagram-direction-up {
+  position: absolute;
+  border-style: solid;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+  }
+
+  &.diagram-direction-other-process {
+    left: 50%;
+    bottom: 100%;
+    width: 50px;
+    height: 40px;
+    &::before {
+      left: 100%;
+      margin-bottom: -0.3125rem;
+    }
+  }
+}
+
+.diagram-direction-join {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: 65px;
+  height: 50px;
+  border-style: solid;
+}
+.diagram-direction-back {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 130px;
+  margin-top: -3px;
+  border-style: solid;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    margin-top: -9px;
+  }
+  &.is-edit {
+    width: 100px;
+  }
+
+  &.multiple-link {
+    width: 100px;
+  }
+
+  &.multiple-link {
+    .btn-multiple {
+      position: absolute;
+      top: -13px;
+      padding: 0;
+      left: -30px;
+    }
+  }
+
+  &.with-split {
+    width: 40px;
+    margin-right: 60px;
+    border-width: 0 3px 3px 0;
+    &::before {
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: -11px;
+    }
+    .btn-multiple {
+      top: 38px;
+    }
+  }
+
+  .diagram-direction-text {
+    font-size: 11px; //2
+    color: gray;
+  }
+}
+
+[class*='diagram-direction-split-'] {
+  position: absolute;
+  top: 50%;
+  left: 190px;
+  width: 60px;
+  height: 250px;
+  border-style: solid;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 100%;
+    margin-top: -5px;
+  }
+
+  &.is-edit {
+    width: 40px;
+  }
+
+  .diagram-direction-text {
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@each $map, $value in $diagram-colors {
+  .diagram-direction-#{$map} {
+    border-width: map-get($value, border-width);
+    border-color: map-get($value, color);
+
+    &::before {
+      border: 8px solid transparent;
+      border-#{map-get($value, arrow)}-width: 11px;
+      border-#{map-get($value, arrow)}-color: map-get($value, color);
+    }
+
+    // .diagram-direction-text {
+    //   background-color: map-get($value, text-bg);
+    // }
+  }
+}
+
+.step-list-group {
+  .list-group-item {
+    display: flex;
+    align-items: center;
+
+    @each $color, $value in $step-colors {
+      &.step-#{$color} {
+        .step-type-icon {
+          > svg {
+            fill: $value;
+            color: $value;
+          }
+        }
+      }
+    }
+
+    &.step-site .step-type-icon > svg {
+      color: #183783;
+      stroke-dasharray: 5, 5;
+    }
+  }
+}
+
+.step-type-icon {
+  display: inline-flex;
+  margin-right: 0.75rem;
+  padding-right: 1rem;
+  border-right: 1px solid var(--color-gray-200);
+
+  > svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.site-links-list {
+  position: relative;
+  list-style: none;
+  padding: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -2rem;
+    bottom: 2rem;
+    border-left: 2px solid var(--color-gray-400);
+  }
+
+  > li {
+    position: relative;
+    margin-top: 2rem;
+    padding-left: 3.4rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 3rem;
+      border-top: 2px solid var(--color-gray-400);
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 3rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      margin-top: -0.1875rem;
+      margin-left: -0.4375rem;
+      border: 2px solid var(--color-gray-400);
+      border-width: 2px 2px 0 0;
+      transform: rotate(45deg);
+    }
+
+    [class*='card-'] {
+      min-width: 135px;
+      padding: 0.3125rem 0.625rem;
+    }
+
+    .card-header svg {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.3125rem;
+    }
+
+    .site-direction {
+      position: relative;
+      margin-right: 0.1875rem;
+      padding: 0 2rem;
+      border-bottom: 2px solid var(--color-gray-400);
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-top: -3px;
+        border: 2px solid var(--color-gray-400);
+        border-width: 2px 2px 0 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  &.btns-list {
+    &::before {
+      bottom: 0;
+    }
+    > li {
+      padding-left: 2rem;
+      &::before {
+        content: '';
+        width: 2rem;
+      }
+
+      &::after {
+        content: none;
+      }
+    }
+  }
+}
+
+.close-status-wrap {
+  position: absolute;
+  padding: 0.625rem;
+  background-color: rgba(67, 165, 246, 0.15);
+  border-radius: 0.5rem;
+
+  .diagram-item-wrap {
+    position: initial;
+    + .diagram-item-wrap {
+      margin-top: 0.625rem;
+    }
+  }
+}
+
+.criteria-list {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    // width: 1px;
+    // border-left: 1px solid var(--color-primary);
+  }
+
+  > li {
+    position: relative;
+
+    &:not(:last-child) {
+      margin-bottom: 0.3125rem;
+    }
+  }
+
+  &.view-criteria-list {
+    > li {
+      background-color: var(--color-white);
+
+      &:not(:last-child) {
+        margin-bottom: 0.625rem;
+      }
+    }
+  }
+}
+
+.add-criteria-block {
+  &::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 15px;
+    margin-left: 1rem;
+    border-left: 3px solid var(--color-gray-300);
+  }
+}
+
+.updatenode__controls {
+  position: absolute;
+  right: 90px;
+  top: 20px;
+  z-index: 4;
+  font-size: 12px;
+}
+
+.updatenode__checkboxwrapper {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.react-flow__handle {
+  width: 8px !important;
+  height: 10px !important;
+  border-radius: 3px !important;
+}
+
+.react-flow__handle.incoming {
+  background-color: #ff0072 !important; //#6865a5; // #ff0072
+}
+
+.react-flow__handle.outgoing {
+  background-color: #6865a5 !important; //#6865a5; // #ff0072
+}
+
+// .react-flow__panel.react-flow__attribution {
+//   display: none;
+// }
+
+.dndflow {
+  flex-direction: row;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  width: 85vh;
+}
+
+.dndsidebar aside {
+  max-width: 90px;
+  font-size: 12px;
+  background: #fcfcfc;
+  border: 1px solid #eee;
+}
+
+.dndsidebar .dndnode {
+  cursor: grab;
+}
+
+.dndflow .reactflow-wrapper {
+  flex-grow: 1;
+  height: 100%;
+}

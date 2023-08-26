@@ -1,0 +1,52 @@
+import React, { useEffect } from 'react';
+import { Box } from '@mui/material';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import KanbanBoard from './Board';
+import { kanbanColumnsAtom, kanbanCardsAtom } from '@activity/store/atoms/activity';
+import KanbanColumn from './Column';
+import { IColumn } from '@base/components/@hanbiro/Kanban/Interface';
+
+interface KanbanProps {}
+
+const mockColumns: IColumn[] = [
+  {
+    id: 'overdue',
+    title: 'Overdue'
+  },
+  {
+    id: 'today',
+    title: 'Today'
+  },
+  {
+    id: 'thisweek',
+    title: 'This Week'
+  },
+  {
+    id: 'others',
+    title: 'Others'
+  }
+];
+
+const Kanban = (props: KanbanProps) => {
+  const cards = useRecoilValue(kanbanCardsAtom);
+  const [columns, setColumns] = useRecoilState(kanbanColumnsAtom);
+
+  useEffect(() => {
+    setColumns({
+      ...columns,
+      columns: mockColumns
+    });
+  }, []);
+
+  return (
+    <Box sx={{ px: 2 }}>
+      <KanbanBoard columns={columns?.columns ?? []} cards={cards}>
+        {({ id = '', title = '', index }) => {
+          return <KanbanColumn key={id} id={id} title={title} index={index} />;
+        }}
+      </KanbanBoard>
+    </Box>
+  );
+};
+
+export default Kanban;

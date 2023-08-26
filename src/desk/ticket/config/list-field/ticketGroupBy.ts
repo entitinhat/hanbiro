@@ -1,0 +1,16 @@
+export const ALL_TICKETS = 'all';
+export const MY_TICKETS = 'my';
+export const MY_NEW_TICKETS = 'myNew';
+export const MY_OVERDUE_TICKETS = 'myOverDue';
+export const MY_GROUP_TICKETS = 'myGroup';
+export const MY_GROUP_TICKETS_2 = 'myGroup2';
+export const UNASSIGNED_TICKETS = 'unassigned';
+export const TICKETS_PER_CUSTOMER = 'ticketsPerCustomer';
+export const TICKETS_PER_CUSTOMER_2 = 'ticketsPerCustomer2';
+export const TICKETS_PER_PRIORITY = 'ticketsPerPriority';
+export const TICKETS_PER_PRIORITY_2 = 'ticketsPerPriority2';
+export const TICKETS_PER_CHANNEL = 'ticketsPerChannel';
+export const TICKETS_PER_CHANNEL_2 = 'ticketsPerChannel2';
+export const TICKETS_PER_PROCESS = 'ticketsPerProcess';
+export const TICKETS_PER_PROCESS_2 = 'ticketsPerProcess2';
+export const DELETED_TICKET = 'deletedTicket';

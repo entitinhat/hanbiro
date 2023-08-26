@@ -1,0 +1,32 @@
+import { Box, TextField } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DateRange, DesktopDateRangePicker, LocalizationProvider } from '@mui/lab';
+
+interface DateRangePickerProps {
+  inputFormat?: string;
+  value: DateRange<Date>;
+  onChange: (date: DateRange<Date>) => void;
+}
+
+const DateRangePicker = ({ inputFormat = "MM/dd/yyyy", value, onChange }: DateRangePickerProps) => {
+  //const [value, setValue] = useState<DateRange<Date>>([null, null]);
+
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DesktopDateRangePicker
+        //startText="Desktop Start"
+        value={value}
+        onChange={onChange}
+        renderInput={(startProps: any, endProps: any) => (
+          <>
+            <TextField {...startProps} />
+            <Box sx={{ mx: 2 }}> To </Box>
+            <TextField {...endProps} />
+          </>
+        )}
+      />
+    </LocalizationProvider>
+  );
+}
+
+export default DateRangePicker;

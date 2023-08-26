@@ -1,0 +1,79 @@
+import { Box, Container, Drawer, useMediaQuery } from '@mui/material';
+import { CSSObject, SxProps, Theme, useTheme } from '@mui/material/styles';
+
+interface SidebarProps {
+  sx?: SxProps;
+  open: boolean;
+  overlay?: boolean; // true : position is absolute
+  children: React.ReactNode;
+  width?: string;
+}
+
+const openedMixin = (theme: Theme, width: string, shadow?: string): CSSObject => ({
+  width: '100%',
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen
+  }),
+  overflowX: 'hidden',
+  position: 'relative',
+  border: 'none',
+  boxShadow: shadow || theme.customShadows.z1
+});
+
+const closedMixin = (theme: Theme, mr: string, shadow?: string): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  overflowX: 'hidden',
+  border: 'none',
+  position: 'relative',
+  marginRight: mr,
+  display: 'none',
+  boxShadow: shadow || theme.customShadows.z1
+});
+
+export default function Sidebar({ children, width = '100%', sx, open, overlay = false }: SidebarProps) {
+  const theme = useTheme();
+  console.log('width', width)
+  const matchWidth = useMediaQuery(theme.breakpoints.down('sm')) ? '100%' : width;
+
+  console.log('sms', useMediaQuery(theme.breakpoints.down('sm')), matchWidth)
+
+  return (
+    <Drawer
+      anchor="right"
+      open={open}
+      variant="persistent"
+      sx={{
+        // position: overlay ? 'absolute' : 'relative',
+        // top: 0,
+        // right: 0,
+        // height: 'calc(100vh - 60px)',
+        width: matchWidth,
+        flexShrink: 0,
+        backgroundColor: theme.palette.background.paper,
+        whiteSpace: 'nowrap',
+        boxSizing: 'border-box',
+        ...(open && {
+          ...openedMixin(theme, matchWidth),
+          '& .MuiDrawer-paper': openedMixin(theme, matchWidth, 'none')
+        }),
+        ...(!open && {
+          ...closedMixin(theme, matchWidth),
+          '& .MuiDrawer-paper': closedMixin(theme, matchWidth, 'none')
+        }),
+        ...(overlay && {position: 'absolute', right: 0, height: 'calc(100vh - 60px)'}),
+        ...sx
+      }}
+      ModalProps={{
+        keepMounted: true,
+        disableAutoFocus: true,
+        disableEnforceFocus: true
+      }}
+    >
+      <Container>{children}</Container>
+    </Drawer>
+  );
+}

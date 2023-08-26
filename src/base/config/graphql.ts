@@ -1,0 +1,12 @@
+// export const GRAPHQL_LOCAL_SERVER = 'https://desk.jiki.me:8443/';
+export const GRAPHQL_LOCAL_SERVER = 'http://localhost:8002/';
+// export const GRAPHQL_LOCAL_SERVER = 'http://10.0.3.32:8000/';
+export const GRAPHQL_SERVER = '/desk-graphql'; //'https://desk.jiki.me:8443/';
+export const GRAPHQL_HOST = 'jiki.me'; //'suojeon.co.kr';
+export const GRAPHQL_HOSTID = '-EdqnHFDfeA';
+// export const GRAPHQL_HOST = 'ncrm.io';
+export const STORAGE_UPLOAD_SERVER = 'https://storage.habin.io/core.storage.v1.Storage'; //'https://desk.ncrm.io:3112/core.storage.v1.Storage'; //
+export const STORAGE_SERVER_USERNAME = 'root';
+export const STORAGE_SERVER_PASSWORD = 'eatcodesleep1';
+export const BLOCK_STORAGE_SERVER = 'https://desk.jiki.me:8443/v1/blockstorage'; //'http://localhost:10082/v1/blockstorage';
+export const STORAGE_BUCKET = 'desk-ncrm';

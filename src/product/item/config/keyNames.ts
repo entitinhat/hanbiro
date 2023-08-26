@@ -1,0 +1,45 @@
+export const KEY_ITEM_CODE = 'code';
+export const KEY_ITEM_NAME = 'name';
+export const KEY_ITEM_ACTIVE = 'active';
+export const KEY_ITEM_INVENTORY_TYPE = 'inventoryType';
+export const KEY_ITEM_TYPE = 'itemType';
+export const KEY_ITEM_PRODUCT = 'prod';
+export const KEY_ITEM_UNIT = 'unit';
+export const KEY_ITEM_UNIT_VALUE = 'unitVal';
+export const KEY_ITEM_UNIT_VALUE_QTY = 'unitValQty';
+export const KEY_ITEM_ATTR_VALUES = 'attrValues';
+export const KEY_ITEM_BRAND = 'brand';
+export const KEY_ITEM_DIMENSION = 'dimension';
+export const KEY_ITEM_WEIGHT = 'weight';
+export const KEY_ITEM_COUNTRY_ORIGIN = 'countryOrigin';
+export const KEY_ITEM_WARRANTY_PERIOD = 'warrantyPeriod';
+export const KEY_ITEM_DESCRIPTION = 'description';
+export const KEY_ITEM_VENDOR = 'vendor';
+export const KEY_ITEM_MANUFACTURER = 'manufacturer';
+export const KEY_ITEM_MANUFACTURE_DATE = 'manufactureDate';
+export const KEY_ITEM_EXPIRED_DATE = 'expiredDate';
+export const KEY_ITEM_BEST_BEFORE_DATE = 'bestBeforeDate';
+export const KEY_ITEM_BASE_PRICE = 'basePrice';
+export const KEY_ITEM_BEST_PRICE = 'bestPrice';
+export const KEY_ITEM_COST_PRICE = 'costPrice';
+export const KEY_ITEM_UNIT_PRICE = 'unitPrice';
+export const KEY_ITEM_PURCHASE_PRICE = 'purchasePrice';
+export const KEY_ITEM_ASSOCIATED_ITEMS = 'associatedItems';
+export const KEY_ITEM_IMAGES = 'images';
+export const KEY_ITEM_ASSIGN_TO = 'assignTo';
+
+export const KEY_ITEM_OPEN_STOCK = 'openStock';
+export const KEY_ITEM_STOCK_ON_HAND = 'stockOnHand';
+export const KEY_ITEM_SKU = 'sku';
+export const KEY_ITEM_REPLENISHMENT_POINT = 'replenishmentPoint';
+export const KEY_ITEM_BARCODE = 'barcode';
+
+export const KEY_ITEM_CREATED_BY = 'createdBy';
+export const KEY_ITEM_CREATED_AT = 'createdAt';
+export const KEY_ITEM_UPDATED_BY = 'updatedBy';
+export const KEY_ITEM_UPDATED_AT = 'updatedAt';
+export const KEY_ITEM_DELETED_BY = 'deletedBy';
+export const KEY_ITEM_DELETED_AT = 'deletedAt';
+
+export const KEY_ITEM_EXPORT = 'export';
+export const KEY_ITEM_IMPORT = 'import';

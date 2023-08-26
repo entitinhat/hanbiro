@@ -1,0 +1,66 @@
+import { useRecoilValue } from 'recoil';
+
+import { drawerWidth } from '@base/config/config';
+import { menuWithDrawerOpen } from '@base/store/selectors/app';
+import { Tune } from '@mui/icons-material';
+import SearchIcon from '@mui/icons-material/Search';
+import { Box, Chip, Stack, useTheme } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
+import Paper from '@mui/material/Paper';
+
+export default function Search() {
+  const theme = useTheme();
+  const drawerOpen = useRecoilValue(menuWithDrawerOpen);
+
+  return (
+    <Box
+      sx={{
+        position: 'fixed',
+        top: 110,
+        right: 0,
+        left: drawerOpen ? drawerWidth : 0,
+        zIndex: 9999,
+        display: 'flex',
+        justifyContent: 'center'
+      }}
+    >
+      <Paper sx={{ width: 400, boxShadow: theme.customShadows.z1 }}>
+        <Box
+          sx={{
+            p: '2px 4px',
+            display: 'flex',
+            alignItems: 'center',
+            // border: '1px solid',
+            // borderColor: theme.palette.divider,
+            borderRadius: '8px 8px 0 0',
+            // borderBottom: 'none',
+            bgcolor: theme.palette.mode == 'dark' ? theme.palette.header : 'white'
+          }}
+        >
+          <IconButton type="button" sx={{ p: 1 }} aria-label="search">
+            <SearchIcon />
+          </IconButton>
+          <InputBase sx={{ ml: 1, flex: 1, lineHeight: 2.4 }} placeholder="Search" inputProps={{ 'aria-label': 'search input' }} />
+          {/* <IconButton type="button" sx={{ color: 'grey.0', p: 1 }} aria-label="search filter">
+          <Tune />
+        </IconButton> */}
+        </Box>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{
+            p: 2,
+            // border: '1px solid',
+            // borderColor: theme.palette.divider,
+            borderRadius: '0 0 8px 8px',
+            // borderTop: 'none',
+            bgcolor: theme.palette.mode == 'dark' ? theme.palette.header : 'white'
+          }}
+        >
+          <Chip variant="outlined" size="small" color="secondary" label="test" />
+        </Stack>
+      </Paper>
+    </Box>
+  );
+}

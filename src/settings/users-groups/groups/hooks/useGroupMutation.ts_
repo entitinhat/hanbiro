@@ -1,0 +1,36 @@
+import { useRpcMutationPost } from '@base/hooks/useRpcMutationPost';
+import useSnackBar from '@base/hooks/useSnackBar';
+import apiKeys from '../config/apiKeys';
+
+export function useGroupMutation() {
+  const { enqueueSuccessBar, enqueueErrorBar } = useSnackBar();
+  const mCreate = useRpcMutationPost(apiKeys.createGroup, {
+    onSucess: (response) => {
+      enqueueSuccessBar('Create Group Successfully');
+    },
+    onError: (error) => {
+      enqueueErrorBar('Create Group Failed' + error?.message ?? '');
+    }
+  });
+  const mUpdate = useRpcMutationPost(apiKeys.updateGroup, {
+    onSucess: (response) => {
+      enqueueSuccessBar('Update Group Successfully');
+    },
+    onError: (error) => {
+      enqueueErrorBar('Update Group Failed' + error?.message ?? '');
+    }
+  });
+  const mDelete = useRpcMutationPost(apiKeys.deleteGroup, {
+    onSucess: (response) => {
+      enqueueSuccessBar('Delete Group Successfully');
+    },
+    onError: (error) => {
+      enqueueErrorBar('Delete Group Failed' + error?.message ?? '');
+    }
+  });
+  return {
+    mCreate,
+    mUpdate,
+    mDelete
+  };
+}

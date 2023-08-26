@@ -1,0 +1,80 @@
+import _ from 'lodash';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+
+import ReactSplit from '@devbookhq/splitter';
+import useStageMutation from '@process/hooks/useStageMutation';
+import { stageAtom } from '@process/store/atoms/diagram';
+
+import StageItem from './StageItem';
+
+interface StageListProps {
+  closedX: number;
+  processId: string;
+}
+
+function StageList({ closedX, processId }: StageListProps) {
+  const stages = useRecoilValue(stageAtom);
+  // const splitWidth = closedX + 185;
+  const splitWidth = closedX;
+  const [stageSizes, setStageSizes] = useState<number[]>();
+  const {
+    mResizeStage: { mutate: mutationUpdate }
+  } = useStageMutation(processId);
+
+  const onDragEnd = useCallback((gutterIdx: number, newSizes: number[]) => {
+    const stageWidths = newSizes.map((size, i) => {
+      return {
+        id: stages[i].id,
+        width: (splitWidth * size) / 100
+      };
+    });
+
+    setStageSizes(newSizes);
+    mutationUpdate({ id: processId, resize: stageWidths });
+  }, []);
+
+  useEffect(() => {
+    let sizes = stages.map((stage) => {
+      const width = stage.width ?? 230;
+      return (width * 100) / splitWidth;
+    });
+    const totalSizes = _.sum(sizes);
+    if (totalSizes < 100) {
+      sizes[sizes.length - 1] += 100 - totalSizes;
+    }
+    setStageSizes(sizes);
+  }, [stages]);
+
+  const minSizes = useMemo(() => {
+    return stages.map((stage) => {
+      return stage.width > 230 ? 230 : 230;
+    });
+  }, [stages]);
+
+  return (
+    <div className="stage-wrap" style={{ width: `${splitWidth}px` }}>
+      <ReactSplit initialSizes={stageSizes} minWidths={minSizes} onResizeFinished={onDragEnd}>
+        {stages.map((stage) => {
+          let className = '';
+          if (stage.property == 'PROPERTY_NEW') {
+            className = 'stage-open';
+          } else if (stage.property == 'PROPERTY_CLOSE') {
+            className = 'stage-closed';
+          }
+          // if (stage.property == 'PROPERTY_CLOSE') {
+          //   return (
+          //     <React.Fragment key={stage.id}>
+          //       <Stage className={className} stage={stage} processId={processId} />
+          //       <div></div>
+          //     </React.Fragment>
+          //   );
+          // } else {
+          return <StageItem key={stage.id} className={className} stage={stage} processId={processId} />;
+        })}
+      </ReactSplit>
+    </div>
+  );
+}
+
+export default StageList;

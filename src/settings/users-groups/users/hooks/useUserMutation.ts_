@@ -1,0 +1,13 @@
+import { useRpcMutationPost } from '@base/hooks/useRpcMutationPost';
+import apiKeys from '@directory/users/config/apiKeys';
+
+export function useUserMutation() {
+  const mCreate = useRpcMutationPost(apiKeys.createUser, { onSucess: (response) => {}, onError: (error) => {} });
+  const mUpdate = useRpcMutationPost(apiKeys.updateUser, { onSucess: (response) => {}, onError: (error) => {} });
+  const mDelete = useRpcMutationPost(apiKeys.deleteUser, { onSucess: (response) => {}, onError: (error) => {} });
+  return {
+    mCreate,
+    mUpdate,
+    mDelete
+  };
+}
